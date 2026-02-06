@@ -1,0 +1,2043 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-zh="MD3 - 高性能 Qt/QML Material Design 3 组件库" data-en="MD3 - High-performance Qt/QML Material Design 3 Component Library">MD3 - 高性能 Qt/QML Material Design 3 组件库</title>
+    <style>
+        :root {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-outline: #79747E;
+            --md-ease: cubic-bezier(.2,.7,.2,1);
+            --glass-bg: rgba(255, 251, 254, 0.75);
+            --glass-border: rgba(121, 116, 126, 0.15);
+            --hero-subtext: #49454F;
+            --card-bg: #FFFFFF;
+            --footer-bg: #F5F5F5;
+            --pro-bg: #FDFBFF;
+            --pill-bg: rgba(255, 255, 255, 0.75);
+            --pill-border: rgba(121, 116, 126, 0.18);
+            --hint-bg: rgba(255, 255, 255, 0.65);
+            --hint-text: rgba(28, 27, 31, 0.75);
+            --fade-bg: rgba(255, 251, 254, 1);
+            --fade-to: rgba(255, 251, 254, 0);
+            color-scheme: light dark;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --md-sys-color-primary: #D0BCFF;
+                --md-sys-color-on-primary: #381E72;
+                --md-sys-color-primary-container: #4F378B;
+                --md-sys-color-on-primary-container: #EADDFF;
+                --md-sys-color-surface: #141218;
+                --md-sys-color-on-surface: #E6E1E5;
+                --md-sys-color-surface-variant: #49454F;
+                --md-sys-color-outline: #938F99;
+                --glass-bg: rgba(20, 18, 24, 0.72);
+                --glass-border: rgba(147, 143, 153, 0.18);
+                --hero-subtext: rgba(230, 225, 229, 0.78);
+                --card-bg: rgba(28, 27, 31, 0.92);
+                --footer-bg: rgba(28, 27, 31, 0.9);
+                --pro-bg: rgba(20, 18, 24, 0.85);
+                --pill-bg: rgba(28, 27, 31, 0.72);
+                --pill-border: rgba(147, 143, 153, 0.24);
+                --hint-bg: rgba(28, 27, 31, 0.72);
+                --hint-text: rgba(230, 225, 229, 0.75);
+                --fade-bg: rgba(20, 18, 24, 1);
+                --fade-to: rgba(20, 18, 24, 0);
+            }
+        }
+
+        * { box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Roboto', 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--md-sys-color-surface);
+            color: var(--md-sys-color-on-surface);
+            line-height: 1.6;
+        }
+
+        #scrollbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            width: 0%;
+            background: linear-gradient(90deg, rgba(103, 80, 164, 0.1), rgba(103, 80, 164, 0.9));
+            z-index: 200;
+            transform-origin: 0 0;
+        }
+
+        header {
+            background-color: var(--glass-bg);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .pro-section {
+            background-color: var(--pro-bg);
+            border-radius: 24px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            max-width: 700px;
+            margin: -40px auto 60px;
+            color: rgba(28, 27, 31, 0.62);
+        }
+
+        .section-subtitle.wide {
+            max-width: 900px;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .section-subtitle { color: rgba(230, 225, 229, 0.62); }
+            .hero {
+                background: transparent;
+            }
+            #scrollbar {
+                background: linear-gradient(90deg, rgba(208, 188, 255, 0.14), rgba(208, 188, 255, 0.95));
+            }
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--md-sys-color-primary);
+            letter-spacing: 0.2px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--md-sys-color-on-surface);
+            margin-left: 24px;
+            font-weight: 500;
+            opacity: 0.82;
+            transition: opacity 180ms var(--md-ease), transform 180ms var(--md-ease);
+        }
+
+        .nav-links a:hover {
+            opacity: 1;
+            transform: translateY(-1px);
+        }
+
+        .nav-links a.active {
+            opacity: 1;
+            color: var(--md-sys-color-primary);
+        }
+
+        .nav-links a.cta {
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 10px 24px;
+            border-radius: 20px;
+            transition: background-color 180ms var(--md-ease), transform 180ms var(--md-ease), box-shadow 180ms var(--md-ease);
+            opacity: 1;
+            box-shadow: 0 10px 26px rgba(33, 0, 93, 0.12);
+        }
+
+        .nav-links a.cta:hover {
+            background-color: #553d91;
+            transform: translateY(-1px);
+            box-shadow: 0 14px 34px rgba(33, 0, 93, 0.16);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .header-actions {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-btn {
+            appearance: none;
+            border: 1px solid var(--pill-border);
+            background: var(--pill-bg);
+            color: var(--md-sys-color-on-surface);
+            padding: 8px 12px;
+            border-radius: 999px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            cursor: pointer;
+            transition: transform 180ms var(--md-ease), border-color 180ms var(--md-ease), box-shadow 180ms var(--md-ease), background 180ms var(--md-ease);
+            user-select: none;
+        }
+
+        .toggle-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(103, 80, 164, 0.35);
+            box-shadow: 0 10px 22px rgba(33, 0, 93, 0.12);
+        }
+
+        .toggle-btn:active {
+            transform: translateY(0px);
+            box-shadow: 0 6px 14px rgba(33, 0, 93, 0.10);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            left: 50%;
+            bottom: 26px;
+            transform: translateX(-50%);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--hint-bg);
+            border: 1px solid var(--pill-border);
+            color: var(--hint-text);
+            font-size: 13px;
+            font-weight: 700;
+            backdrop-filter: blur(10px);
+            z-index: 3;
+            animation: hintBounce 1.8s var(--md-ease) infinite;
+        }
+
+        .scroll-hint .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--md-sys-color-primary);
+            box-shadow: 0 0 0 6px rgba(103, 80, 164, 0.12);
+        }
+
+        .scroll-hint .chev {
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid rgba(103, 80, 164, 0.8);
+            border-bottom: 2px solid rgba(103, 80, 164, 0.8);
+            transform: rotate(45deg);
+            margin-left: 2px;
+        }
+
+        @keyframes hintBounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(6px); }
+        }
+
+        .marquee {
+            padding: 18px 0 0;
+            margin-top: -10px;
+            position: relative;
+            overflow: hidden;
+            -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+        }
+
+        .marquee::before,
+        .marquee::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 120px;
+            z-index: 2;
+            pointer-events: none;
+            display: none;
+        }
+
+        .marquee::before {
+            left: 0;
+            background: linear-gradient(90deg, var(--fade-bg), var(--fade-to));
+        }
+
+        .marquee::after {
+            right: 0;
+            background: linear-gradient(270deg, var(--fade-bg), var(--fade-to));
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 10px;
+            width: max-content;
+            padding: 12px 20px 22px;
+            animation: marqueeMove 22s linear infinite;
+            transform: translateZ(0);
+        }
+
+        .marquee:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        .marquee-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--pill-bg);
+            border: 1px solid var(--pill-border);
+            backdrop-filter: blur(10px);
+            color: rgba(28, 27, 31, 0.78);
+            font-size: 13px;
+            font-weight: 800;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            .marquee-pill {
+                color: rgba(230, 225, 229, 0.78);
+            }
+        }
+
+        .marquee-pill::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(160px 90px at var(--pill-x, 20%) var(--pill-y, 30%), rgba(255,255,255,0.55), rgba(255,255,255,0) 62%);
+            opacity: 0.5;
+            transition: opacity 320ms var(--md-ease);
+            pointer-events: none;
+        }
+
+        .marquee-pill:hover::after {
+            opacity: 0.8;
+        }
+
+        .marquee-pill i {
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(103, 80, 164, 0.75);
+            box-shadow: 0 0 0 6px rgba(103, 80, 164, 0.10);
+        }
+
+        @keyframes marqueeMove {
+            from { transform: translate3d(0,0,0); }
+            to { transform: translate3d(-50%,0,0); }
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 20px;
+            /* New styles handled at the bottom of style block */
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .hero p {
+            font-size: 24px;
+            max-width: 800px;
+            margin: 0 auto 40px;
+            color: var(--hero-subtext);
+        }
+
+        .hero-cta {
+            display: inline-block;
+            position: relative;
+            background-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 15px 40px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 800;
+            letter-spacing: 0.2px;
+            overflow: hidden;
+            /* Enhanced Glow */
+            box-shadow: 0 0 0 0 rgba(103, 80, 164, 0.7);
+            animation: pulse-purple 2s infinite;
+            transition: transform 180ms var(--md-ease), background-color 180ms var(--md-ease);
+        }
+
+        .hero-cta::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(140px 70px at var(--btn-x, 20%) var(--btn-y, 12%), rgba(255,255,255,0.55), transparent 62%);
+            opacity: 0.6;
+            transition: opacity 300ms var(--md-ease);
+            pointer-events: none;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 24px 60px rgba(33, 0, 93, 0.18);
+            background-color: #5a43a0;
+        }
+
+        .hero-cta:hover::before {
+            opacity: 0.85;
+        }
+
+        .hero-cta {
+            transform: translate3d(var(--cta-x, 0px), var(--cta-y, 0px), 0);
+        }
+
+        .hero-cta:hover {
+            transform: translate3d(var(--cta-x, 0px), calc(var(--cta-y, 0px) - 2px), 0);
+        }
+
+        .section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: var(--md-sys-color-on-surface);
+            letter-spacing: -0.2px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            left: 50%;
+            top: calc(100% + 14px);
+            transform: translateX(-50%);
+            width: 160px;
+            height: 6px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, rgba(103, 80, 164, 0), rgba(103, 80, 164, 0.85), rgba(234, 221, 255, 0.95), rgba(103, 80, 164, 0));
+            background-size: 240% 100%;
+            background-position: 0% 0%;
+            opacity: 0.75;
+            animation: underlineMove 4.2s var(--md-ease) infinite;
+        }
+
+        @keyframes underlineMove {
+            0% { background-position: 0% 0%; opacity: 0.62; }
+            50% { background-position: 90% 0%; opacity: 0.88; }
+            100% { background-position: 0% 0%; opacity: 0.62; }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            perspective: 1100px;
+            perspective-origin: 50% 50%;
+        }
+
+        .card {
+            --card-ty: 0px;
+            --card-rx: 0deg;
+            --card-ry: 0deg;
+            --reveal-y: 0px;
+            --shine-x: 50%;
+            --shine-y: 30%;
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            transition: transform 220ms var(--md-ease), box-shadow 220ms var(--md-ease), border-color 220ms var(--md-ease), opacity 700ms var(--md-ease), filter 700ms var(--md-ease);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            will-change: transform;
+            transform-origin: 50% 50%;
+            transform: translate3d(0, calc(var(--card-ty) + var(--reveal-y)), 0) rotateX(var(--card-rx)) rotateY(var(--card-ry));
+        }
+
+        .card::before {
+            content: "";
+            position: absolute;
+            inset: -1px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(103, 80, 164, 0.22), rgba(234, 221, 255, 0));
+            opacity: 0;
+            transition: opacity 220ms var(--md-ease);
+            pointer-events: none;
+        }
+
+        .card::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: radial-gradient(260px 200px at var(--shine-x) var(--shine-y), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+            opacity: 0;
+            transition: opacity 220ms var(--md-ease);
+            pointer-events: none;
+            mix-blend-mode: soft-light;
+        }
+
+        .card:hover {
+            --card-ty: -6px;
+            box-shadow: 0 8px 12px rgba(0,0,0,0.1);
+            border-color: rgba(103, 80, 164, 0.35);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        .card h3 {
+            color: var(--md-sys-color-primary);
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: -0.1px;
+        }
+
+        .card p {
+            color: var(--md-sys-color-on-surface);
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .icon {
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex: 0 0 18px;
+            color: var(--md-sys-color-primary);
+            opacity: 0.9;
+        }
+
+        .icon svg {
+            width: 18px;
+            height: 18px;
+            display: block;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .tag.hot { background-color: #FFD8E4; color: #31111D; }
+        .tag.new { background-color: #C2E7FF; color: #001D35; }
+        .tag.core { background-color: #E2E2E2; color: #1C1B1F; }
+
+        .feature-list li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            list-style-type: none;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 999px;
+            background: var(--md-sys-color-primary);
+            position: absolute;
+            left: 0;
+            top: 0.55em;
+            transform: translateY(-50%);
+            opacity: 0.9;
+        }
+
+        footer {
+            background-color: var(--footer-bg);
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        .highlight-text {
+            color: var(--md-sys-color-primary);
+            font-weight: bold;
+        }
+
+        .muted {
+            opacity: 0.75;
+        }
+
+        .price {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+            margin: 8px 0 12px;
+        }
+
+        .price small {
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0.7;
+        }
+
+        .price-lines {
+            margin: 0;
+            padding: 0;
+        }
+
+        .price-lines li {
+            list-style: none;
+            font-size: 14px;
+            margin: 8px 0;
+            padding-left: 0;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            background: var(--pill-bg);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .cta-block {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 16px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 999px;
+            font-weight: 800;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button.primary {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            border-color: var(--md-sys-color-primary);
+        }
+
+        .cta-button.primary::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(140px 70px at var(--btn-x, 20%) var(--btn-y, 12%), rgba(255,255,255,0.50), transparent 62%);
+            opacity: 0.55;
+            transition: opacity 280ms var(--md-ease);
+            pointer-events: none;
+        }
+
+        .cta-button.primary:hover::before {
+            opacity: 0.85;
+        }
+
+        .cta-button.ghost {
+            background: var(--pill-bg);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .reveal {
+            opacity: 0;
+            --reveal-y: 14px;
+            filter: blur(10px);
+        }
+
+        .grid .reveal { transition-delay: var(--d, 0ms); }
+        .grid .reveal:nth-child(1) { --d: 20ms; }
+        .grid .reveal:nth-child(2) { --d: 70ms; }
+        .grid .reveal:nth-child(3) { --d: 120ms; }
+        .grid .reveal:nth-child(4) { --d: 170ms; }
+        .grid .reveal:nth-child(5) { --d: 220ms; }
+        .grid .reveal:nth-child(6) { --d: 270ms; }
+        .grid .reveal:nth-child(7) { --d: 320ms; }
+        .grid .reveal:nth-child(8) { --d: 370ms; }
+
+        .reveal.in {
+            opacity: 1;
+            --reveal-y: 0px;
+            filter: blur(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; filter: none; transition: none; }
+            .card, .nav-links a, .nav-links a.cta, .hero-cta { transition: none; }
+            .marquee-track { animation: none; }
+            .scroll-hint { animation: none; }
+            .card:hover::before { animation: none; }
+            .section-title::after { animation: none; }
+        }
+
+        :root[data-theme="dark"] {
+            --md-sys-color-primary: #D0BCFF;
+            --md-sys-color-on-primary: #381E72;
+            --md-sys-color-primary-container: #4F378B;
+            --md-sys-color-on-primary-container: #EADDFF;
+            --md-sys-color-surface: #141218;
+            --md-sys-color-on-surface: #E6E1E5;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-outline: #938F99;
+            --glass-bg: rgba(20, 18, 24, 0.72);
+            --glass-border: rgba(147, 143, 153, 0.18);
+            --hero-subtext: rgba(230, 225, 229, 0.78);
+            --card-bg: rgba(28, 27, 31, 0.92);
+            --footer-bg: rgba(28, 27, 31, 0.9);
+            --pro-bg: rgba(20, 18, 24, 0.85);
+            --pill-bg: rgba(28, 27, 31, 0.72);
+            --pill-border: rgba(147, 143, 153, 0.24);
+            --hint-bg: rgba(28, 27, 31, 0.72);
+            --hint-text: rgba(230, 225, 229, 0.75);
+            --fade-bg: rgba(20, 18, 24, 1);
+            --fade-to: rgba(20, 18, 24, 0);
+        }
+
+        :root[data-theme="dark"] .section-subtitle { color: rgba(230, 225, 229, 0.62); }
+        :root[data-theme="dark"] .hero { background: transparent; }
+        :root[data-theme="dark"] #scrollbar { background: linear-gradient(90deg, rgba(208, 188, 255, 0.14), rgba(208, 188, 255, 0.95)); }
+        :root[data-theme="dark"] .marquee-pill { color: rgba(230, 225, 229, 0.78); }
+
+        :root[data-theme="light"] {
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-outline: #79747E;
+            --glass-bg: rgba(255, 251, 254, 0.75);
+            --glass-border: rgba(121, 116, 126, 0.15);
+            --hero-subtext: #49454F;
+            --card-bg: #FFFFFF;
+            --footer-bg: #F5F5F5;
+            --pro-bg: #FDFBFF;
+            --pill-bg: rgba(255, 255, 255, 0.75);
+            --pill-border: rgba(121, 116, 126, 0.18);
+            --hint-bg: rgba(255, 255, 255, 0.65);
+            --hint-text: rgba(28, 27, 31, 0.75);
+            --fade-bg: rgba(255, 251, 254, 1);
+            --fade-to: rgba(255, 251, 254, 0);
+        }
+
+        :root[data-theme="light"] .section-subtitle { color: rgba(28, 27, 31, 0.62); }
+        :root[data-theme="light"] .hero { background: transparent; }
+        :root[data-theme="light"] #scrollbar { background: linear-gradient(90deg, rgba(103, 80, 164, 0.1), rgba(103, 80, 164, 0.9)); }
+        :root[data-theme="light"] .marquee-pill { color: rgba(28, 27, 31, 0.78); }
+
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+
+        /* --- Noise Texture Overlay --- */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9000;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.4'/%3E%3C/svg%3E");
+            opacity: 0.08;
+            mix-blend-mode: overlay;
+        }
+
+        /* --- Ambient Gradient Orbs --- */
+        .ambient-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.6;
+            animation: floatOrb 20s infinite ease-in-out;
+        }
+
+        .orb-1 {
+            width: 60vw;
+            height: 60vw;
+            background: radial-gradient(circle, var(--md-sys-color-primary-container), rgba(103, 80, 164, 0));
+            top: -20%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            width: 50vw;
+            height: 50vw;
+            background: radial-gradient(circle, var(--md-sys-color-secondary-container, #E8DEF8), rgba(232, 222, 248, 0));
+            bottom: -10%;
+            right: -10%;
+            animation-delay: -5s;
+        }
+
+        .orb-3 {
+            width: 30vw;
+            height: 30vw;
+            background: radial-gradient(circle, var(--md-sys-color-tertiary-container, #FFD8E4), rgba(255, 216, 228, 0));
+            top: 40%;
+            left: 40%;
+            animation-delay: -10s;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+            100% { transform: translate(0, 0) scale(1); }
+        }
+
+        :root[data-theme="dark"] .orb { opacity: 0.3; }
+
+        /* --- Hero Text Gradient Animation --- */
+        .hero h1 {
+            background: linear-gradient(120deg, var(--md-sys-color-on-primary-container) 0%, var(--md-sys-color-primary) 50%, var(--md-sys-color-on-primary-container) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            animation: shineText 5s linear infinite;
+        }
+
+        @keyframes shineText {
+            to { background-position: 200% center; }
+        }
+
+        /* --- Enhanced CTA Glow --- */
+        .hero-cta {
+            box-shadow: 0 0 0 0 rgba(103, 80, 164, 0.7);
+            animation: pulse-purple 2s infinite;
+        }
+
+        @keyframes pulse-purple {
+            0% { box-shadow: 0 0 0 0 rgba(103, 80, 164, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(103, 80, 164, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(103, 80, 164, 0); }
+        }
+
+        /* --- Glassmorphism Card Refinement --- */
+        .card {
+            background: rgba(255, 255, 255, 0.65); /* More transparent */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        :root[data-theme="dark"] .card {
+            background: rgba(28, 27, 31, 0.65);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        :root[data-theme="dark"] .hero h1 {
+            background: none;
+            -webkit-text-fill-color: initial;
+            color: var(--md-sys-color-on-surface);
+            animation: none;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .card {
+                background: rgba(28, 27, 31, 0.65);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+            }
+            :root:not([data-theme="light"]) .orb { opacity: 0.3; }
+            :root:not([data-theme="light"]) .hero h1 {
+                background: none;
+                -webkit-text-fill-color: initial;
+                color: var(--md-sys-color-on-surface);
+                animation: none;
+            }
+        }
+        /* --- Pricing Section Improvements --- */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            align-items: stretch;
+        }
+
+        .pricing-card {
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px 30px;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: transform 0.3s var(--md-ease), box-shadow 0.3s var(--md-ease);
+            height: 100%;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            z-index: 2;
+        }
+
+        .pricing-card.popular {
+            border: 2px solid var(--md-sys-color-primary);
+            background: linear-gradient(180deg, rgba(103, 80, 164, 0.05) 0%, var(--card-bg) 100%);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            padding: 6px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(103, 80, 164, 0.3);
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--md-sys-color-primary);
+            margin-bottom: 10px;
+        }
+
+        .plan-price {
+            font-size: 42px;
+            font-weight: 800;
+            color: var(--md-sys-color-on-surface);
+            margin-bottom: 5px;
+            letter-spacing: -1px;
+        }
+
+        .plan-price small {
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.6;
+            letter-spacing: normal;
+        }
+
+        .plan-desc {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            min-height: 42px;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 30px;
+            flex-grow: 1;
+        }
+
+        .plan-features li {
+            margin-bottom: 12px;
+            padding-left: 24px;
+            position: relative;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .plan-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--md-sys-color-primary);
+            font-weight: bold;
+        }
+
+        .plan-features li.dim {
+            opacity: 0.5;
+            text-decoration: line-through;
+        }
+        
+        .plan-features li.dim::before {
+            content: "✕";
+            color: var(--md-sys-color-outline);
+        }
+
+        .pricing-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .pricing-btn.filled {
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+        }
+
+        .pricing-btn.filled:hover {
+            background: #5a43a0;
+            box-shadow: 0 8px 20px rgba(103, 80, 164, 0.25);
+        }
+
+        .pricing-btn.outlined {
+            background: transparent;
+            border: 1px solid var(--md-sys-color-outline);
+            color: var(--md-sys-color-on-surface);
+        }
+
+        .pricing-btn.outlined:hover {
+            border-color: var(--md-sys-color-primary);
+            color: var(--md-sys-color-primary);
+            background: rgba(103, 80, 164, 0.05);
+        }
+
+        /* --- Comparison Table --- */
+        .comparison-container {
+            overflow-x: auto;
+            margin-top: 60px;
+            background: var(--card-bg);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--md-sys-color-surface-variant);
+        }
+
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        .comp-table th, .comp-table td {
+            padding: 16px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--md-sys-color-surface-variant);
+        }
+
+        .comp-table th:first-child, .comp-table td:first-child {
+            text-align: left;
+            padding-left: 0;
+            font-weight: 600;
+        }
+
+        .comp-table th {
+            font-size: 18px;
+            color: var(--md-sys-color-on-surface);
+            padding-bottom: 24px;
+        }
+
+        .comp-table td {
+            font-size: 14px;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.9;
+        }
+
+        .comp-table .check {
+            color: var(--md-sys-color-primary);
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .comp-table .cross {
+            color: var(--md-sys-color-outline);
+            opacity: 0.5;
+        }
+
+        .comp-header-logo {
+            font-size: 14px;
+            opacity: 0.6;
+            display: block;
+            margin-top: 4px;
+            font-weight: normal;
+        }
+        
+        @media (max-width: 768px) {
+            .pricing-grid { grid-template-columns: 1fr; }
+            .comparison-container { padding: 20px; }
+            
+            /* Mobile Header Fix: 2-Row Layout */
+            header {
+                flex-wrap: wrap;
+                padding: 16px 20px;
+                height: auto;
+                align-items: center;
+                gap: 0;
+            }
+
+            .logo {
+                order: 1;
+                flex: 0 0 auto;
+            }
+
+            .header-right {
+                order: 2;
+                flex: 0 0 auto;
+                margin-left: auto;
+                width: auto;
+                justify-content: flex-end;
+            }
+
+            .nav-links {
+                order: 3;
+                width: 100%;
+                margin: 16px 0 0 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 16px;
+                flex-wrap: wrap;
+            }
+
+            .nav-links a {
+                margin-left: 0;
+                font-size: 14px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+                margin-top: 10px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+
+        /* --- Hero Layout & Code Window --- */
+        .hero {
+            padding: 80px 20px 60px;
+            overflow: visible;
+        }
+
+        .hero-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-text {
+            flex: 1;
+            text-align: left;
+            max-width: 600px;
+        }
+
+        .hero-code {
+            flex: 1;
+            display: none;
+            perspective: 1500px;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-code { display: block; }
+            .hero { text-align: left; }
+        }
+        
+        @media (max-width: 1023px) {
+            .hero-container {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-text {
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+
+        .code-window {
+            background: rgba(30, 30, 35, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 30px 60px -10px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,255,255,0.1);
+            padding: 20px;
+            font-family: 'Fira Code', 'Consolas', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #abb2bf;
+            backdrop-filter: blur(20px);
+            transform: rotateY(-10deg) rotateX(5deg);
+            transition: transform 0.4s var(--md-ease), box-shadow 0.4s var(--md-ease);
+            will-change: transform;
+            height: 320px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .code-window:hover {
+            transform: rotateY(0deg) rotateX(0deg) scale(1.02);
+            box-shadow: 0 40px 80px -12px rgba(0,0,0,0.5), 0 0 0 1px rgba(103, 80, 164, 0.5);
+        }
+
+        .window-header {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+
+        .window-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .window-dot.red { background: #ff5f56; }
+        .window-dot.yellow { background: #ffbd2e; }
+        .window-dot.green { background: #27c93f; }
+
+        pre { margin: 0; white-space: pre-wrap; }
+        .token.keyword { color: #c678dd; }
+        .token.property { color: #e06c75; }
+        .token.string { color: #98c379; }
+        .token.number { color: #d19a66; }
+        .token.type { color: #e5c07b; }
+        .token.comment { color: #7f848e; font-style: italic; }
+        .cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #528bff;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 2px;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+    </style>
+</head>
+<body>
+    <div class="ambient-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+    <canvas id="bg-canvas"></canvas>
+    <div id="scrollbar"></div>
+
+    <header>
+        <div class="logo">MD3 Library</div>
+        <div class="header-right">
+            <nav class="nav-links">
+                <a href="#features" data-zh="优势" data-en="Benefits">优势</a>
+                <a href="#pro" data-zh="Pro 功能" data-en="Pro Features">Pro 功能</a>
+                <a href="#pricing" class="cta" data-zh="获取 Pro 版" data-en="Get Pro">获取 Pro 版</a>
+            </nav>
+            <div class="header-actions">
+                <button type="button" class="toggle-btn" id="themeToggle" aria-label="theme">自动</button>
+                <button type="button" class="toggle-btn" id="langToggle" aria-label="language">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-text">
+                <h1 data-zh="下一代 Qt/QML 组件库" data-en="Next-gen Qt/QML Component Library">下一代 Qt/QML 组件库</h1>
+                <p data-zh-html="基于 Material Design 3 规范，纯 QML 实现，零 QtQuick.Controls 依赖。<br>为高性能、跨平台桌面应用而生。" data-en-html="Material Design 3 compliant, pure QML implementation, zero QtQuick.Controls dependency.<br>Built for high-performance, cross-platform desktop apps.">基于 Material Design 3 规范，纯 QML 实现，零 QtQuick.Controls 依赖。<br>为高性能、跨平台桌面应用而生。</p>
+                <div style="margin-top: 30px;">
+                    <a href="#pricing" class="hero-cta" data-zh="查看 Pro 价格" data-en="View Pricing">查看 Pro 价格</a>
+                </div>
+            </div>
+            <div class="hero-code">
+                <div class="code-window">
+                    <div class="window-header">
+                        <span class="window-dot red"></span>
+                        <span class="window-dot yellow"></span>
+                        <span class="window-dot green"></span>
+                    </div>
+                    <pre><code id="typing-code"></code><span class="cursor"></span></pre>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-hint" aria-hidden="true"><span class="dot"></span><span data-zh="向下滚动" data-en="Scroll down">向下滚动</span><span class="chev"></span></div>
+    </section>
+
+    <section class="marquee" aria-label="技术亮点滚动展示">
+        <div class="marquee-track">
+            <span class="marquee-pill"><i></i><span data-zh="纯 QML / 无 QtQuick.Controls" data-en="Pure QML / No QtQuick.Controls">纯 QML / 无 QtQuick.Controls</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="MD3 动态主题与配色" data-en="MD3 Dynamic Theme & Colors">MD3 动态主题与配色</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="高性能绘制与低内存" data-en="High-performance Rendering & Low Memory">高性能绘制与低内存</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="企业级 DataGrid" data-en="Enterprise DataGrid">企业级 DataGrid</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="交互式 Pro Charts" data-en="Interactive Pro Charts">交互式 Pro Charts</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="QML 热重载" data-en="QML Hot Reload">QML 热重载</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="科研 / 工业 / 多行业覆盖" data-en="Research / Industrial / Multi-industry Coverage">科研 / 工业 / 多行业覆盖</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="可定制主题系统" data-en="Customizable Theming System">可定制主题系统</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="纯 QML / 无 QtQuick.Controls" data-en="Pure QML / No QtQuick.Controls">纯 QML / 无 QtQuick.Controls</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="MD3 动态主题与配色" data-en="MD3 Dynamic Theme & Colors">MD3 动态主题与配色</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="高性能绘制与低内存" data-en="High-performance Rendering & Low Memory">高性能绘制与低内存</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="企业级 DataGrid" data-en="Enterprise DataGrid">企业级 DataGrid</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="交互式 Pro Charts" data-en="Interactive Pro Charts">交互式 Pro Charts</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="QML 热重载" data-en="QML Hot Reload">QML 热重载</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="科研 / 工业 / 多行业覆盖" data-en="Research / Industrial / Multi-industry Coverage">科研 / 工业 / 多行业覆盖</span></span>
+            <span class="marquee-pill"><i></i><span data-zh="可定制主题系统" data-en="Customizable Theming System">可定制主题系统</span></span>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <h2 class="section-title" data-zh="核心优势" data-en="Core Benefits">核心优势</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <h3><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M13 2L3 14h7l-1 8 12-14h-7l-1-6Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span data-zh="极致性能" data-en="Extreme Performance">极致性能</span></h3>
+                <p data-zh="完全不依赖 QtQuick.Controls，纯底层 Item 绘制，内存占用更低，启动速度更快。" data-en="Zero QtQuick.Controls. Built on low-level Items for lower memory and faster startup.">完全不依赖 QtQuick.Controls，纯底层 Item 绘制，内存占用更低，启动速度更快。</p>
+            </div>
+            <div class="card reveal">
+                <h3><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 0 18c1.66 0 3-1.12 3-2.5 0-.5-.18-.97-.5-1.34-.32-.36-.5-.85-.5-1.36 0-1.1.9-2 2-2h2a2 2 0 0 0 2-2 9 9 0 0 0-7.5-8.85" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7.5 11.5h.01M9.75 8.75h.01M13.25 8.25h.01M15.75 11h.01" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></span><span data-zh="Material You" data-en="Material You">Material You</span></h3>
+                <p data-zh="完整支持 Material Design 3 动态取色引擎，一键切换主题，支持系统级深色模式。" data-en="Full Material Design 3 dynamic color engine, one-click theming, and system dark mode.">完整支持 Material Design 3 动态取色引擎，一键切换主题，支持系统级深色模式。</p>
+            </div>
+            <div class="card reveal">
+                <h3><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14 7l3 3M3 21l3-1 11-11-2-2L4 18l-1 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M12.5 5.5l2-2a2 2 0 0 1 2.83 0l2.17 2.17a2 2 0 0 1 0 2.83l-2 2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span data-zh="开发者友好" data-en="Developer Friendly">开发者友好</span></h3>
+                <p data-zh="提供脚手架工具、详细文档和丰富的示例代码，开箱即用。" data-en="Scaffolding tools, detailed docs, and rich examples. Ready to use.">提供脚手架工具、详细文档和丰富的示例代码，开箱即用。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pro" class="section pro-section">
+        <h2 class="section-title" data-zh="Pro 版独占功能" data-en="Pro-exclusive Features">Pro 版独占功能</h2>
+        <p class="section-subtitle" data-zh="专为企业级应用、科研仿真、工业控制打造的高级组件套件，解决 99% 的复杂业务场景。" data-en="A premium suite for enterprise apps, research simulation, and industrial control—covers 99% of complex scenarios.">专为企业级应用、科研仿真、工业控制打造的高级组件套件，解决 99% 的复杂业务场景。</p>
+        
+        <div class="grid">
+            <div class="card reveal">
+                <span class="tag hot" data-zh="开发神器" data-en="Dev Tooling">开发神器</span>
+                <h3><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2v5m0 15v-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7.1 4.7A10 10 0 1 0 20 12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span><span data-zh="QML 热重载 (Hot Reload)" data-en="QML Hot Reload">QML 热重载 (Hot Reload)</span></h3>
+                <p data-zh="告别反复编译！修改 QML 代码后界面实时更新，状态保持不变，开发效率提升 10 倍。" data-en="No more rebuild loops. UI updates live after QML edits, with state preserved—up to 10× faster iteration.">告别反复编译！修改 QML 代码后界面实时更新，状态保持不变，开发效率提升 10 倍。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag core" data-zh="基础增强" data-en="Core Upgrade">基础增强</span>
+                <h3><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M4 19h16" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="M7 16l3-4 3 2 5-7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span data-zh="高级图表组件 (Pro Charts)" data-en="Advanced Charts (Pro Charts)">高级图表组件 (Pro Charts)</span></h3>
+                <p data-zh="在基础图表之上提供强大的交互能力：缩放、平移、十字光标，支持百万级数据点流畅渲染。" data-en="Powerful interactions on top of core charts: zoom, pan, crosshair. Smooth rendering for millions of points.">在基础图表之上提供强大的交互能力：缩放、平移、十字光标，支持百万级数据点流畅渲染。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="企业级" data-en="Enterprise">企业级</span>
+                <h3 data-zh="高性能数据表格 (DataGrid)" data-en="High-performance DataGrid">高性能数据表格 (DataGrid)</h3>
+                <ul class="feature-list">
+                    <li data-zh="虚拟化渲染 (10万+ 行流畅滚动)" data-en="Virtualized rendering (100k+ rows smooth scrolling)">虚拟化渲染 (10万+ 行流畅滚动)</li>
+                    <li data-zh="列宽拖拽、列重排、列冻结" data-en="Column resize, reorder, and freeze">列宽拖拽、列重排、列冻结</li>
+                    <li data-zh="多列排序与 Excel 级筛选" data-en="Multi-column sort and Excel-grade filtering">多列排序与 Excel 级筛选</li>
+                </ul>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="报表" data-en="Reporting">报表</span>
+                <h3 data-zh="报表设计与打印" data-en="Report Designer & Printing">报表设计与打印</h3>
+                <ul class="feature-list">
+                    <li data-zh="所见即所得的可视化设计器" data-en="WYSIWYG visual designer">所见即所得的可视化设计器</li>
+                    <li data-zh="拖拽式模板编辑" data-en="Drag-and-drop template editing">拖拽式模板编辑</li>
+                    <li data-zh="PDF/图片导出与打印预览" data-en="PDF/image export and print preview">PDF/图片导出与打印预览</li>
+                </ul>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="科研" data-en="Research">科研</span>
+                <h3 data-zh="数学公式支持 (Math)" data-en="Math Typesetting (LaTeX)">数学公式支持 (Math)</h3>
+                <p data-zh="原生 LaTeX 渲染引擎集成，支持行内与块级公式，完美适配工科与教育类软件。" data-en="Native LaTeX rendering engine with inline and block formulas—ideal for engineering and education apps.">原生 LaTeX 渲染引擎集成，支持行内与块级公式，完美适配工科与教育类软件。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="科研" data-en="Research">科研</span>
+                <h3 data-zh="3D 数据可视化" data-en="3D Data Visualization">3D 数据可视化</h3>
+                <p data-zh="基于 Qt Quick 3D，支持 3D 散点图、曲面图、伪彩映射与切片分析。" data-en="Powered by Qt Quick 3D: 3D scatter, surfaces, pseudo-color mapping, and slice analysis.">基于 Qt Quick 3D，支持 3D 散点图、曲面图、伪彩映射与切片分析。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="科研" data-en="Research">科研</span>
+                <h3 data-zh="科学图像分析器" data-en="Scientific Image Analyzer">科学图像分析器</h3>
+                <p data-zh="专为显微镜与医疗影像设计，支持伪彩映射、ROI 测量、直方图分析。" data-en="Designed for microscopy and medical imaging: pseudo-color mapping, ROI measurement, histogram analysis.">专为显微镜与医疗影像设计，支持伪彩映射、ROI 测量、直方图分析。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="工业" data-en="Industrial">工业</span>
+                <h3 data-zh="工业仪表盘套件" data-en="Industrial Dashboard Kit">工业仪表盘套件</h3>
+                <p data-zh="高保真矢量仪表库，包含环形仪表、线性刻度、阻尼动画与阈值告警。" data-en="High-fidelity vector gauges: radial/linear scales, damped animations, threshold alarms.">高保真矢量仪表库，包含环形仪表、线性刻度、阻尼动画与阈值告警。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="工业" data-en="Industrial">工业</span>
+                <h3 data-zh="甘特图与排程" data-en="Gantt & Scheduling">甘特图与排程</h3>
+                <p data-zh="支持任务拖拽、依赖连线、资源冲突检测，适用于生产排程与项目管理。" data-en="Task drag-and-drop, dependency links, resource conflict checks—for production scheduling and project management.">支持任务拖拽、依赖连线、资源冲突检测，适用于生产排程与项目管理。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="IoT" data-en="IoT">IoT</span>
+                <h3 data-zh="网络拓扑图" data-en="Network Topology">网络拓扑图</h3>
+                <p data-zh="支持弹簧布局自动排列，实时展示设备状态与链路流量。" data-en="Force-directed layout with real-time device status and link traffic visualization.">支持弹簧布局自动排列，实时展示设备状态与链路流量。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="工具" data-en="Tools">工具</span>
+                <h3 data-zh="节点编辑器 (Node Graph)" data-en="Node Editor (Node Graph)">节点编辑器 (Node Graph)</h3>
+                <p data-zh="无限画布、贝塞尔连线、自动布局，适用于工作流编排与可视化编程。" data-en="Infinite canvas, Bezier connections, auto layout—great for workflow orchestration and visual programming.">无限画布、贝塞尔连线、自动布局，适用于工作流编排与可视化编程。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="工具" data-en="Tools">工具</span>
+                <h3 data-zh="富文本与代码编辑器" data-en="Rich Text & Code Editor">富文本与代码编辑器</h3>
+                <p data-zh="Markdown 双栏预览、代码高亮、行号显示与折叠。" data-en="Markdown split preview, syntax highlighting, line numbers, and folding.">Markdown 双栏预览、代码高亮、行号显示与折叠。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="工具" data-en="Tools">工具</span>
+                <h3 data-zh="属性表与参数树" data-en="Property Grid & Parameter Tree">属性表与参数树</h3>
+                <p data-zh="支持复杂层级参数管理、数学表达式输入与撤销重做。" data-en="Hierarchical parameter management, math expression input, undo/redo.">支持复杂层级参数管理、数学表达式输入与撤销重做。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="安防" data-en="Security">安防</span>
+                <h3 data-zh="多路视频监控墙" data-en="Multi-channel Video Wall">多路视频监控墙</h3>
+                <p data-zh="支持 16 路 RTSP 低延迟播放，集成 OSD 叠加与云台控制 UI。" data-en="Up to 16 RTSP streams with low latency, plus OSD overlays and PTZ control UI.">支持 16 路 RTSP 低延迟播放，集成 OSD 叠加与云台控制 UI。</p>
+            </div>
+
+            <div class="card reveal">
+                <span class="tag new" data-zh="GIS" data-en="GIS">GIS</span>
+                <h3 data-zh="GIS 地图与轨迹" data-en="GIS Maps & Tracking">GIS 地图与轨迹</h3>
+                <p data-zh="离线瓦片加载、动态标绘、轨迹回放与地理围栏编辑。" data-en="Offline tiles, dynamic annotations, track playback, and geofence editing.">离线瓦片加载、动态标绘、轨迹回放与地理围栏编辑。</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="pricing" class="section">
+        <h2 class="section-title" data-zh="价格方案" data-en="Pricing Plans">价格方案</h2>
+        <p class="section-subtitle wide" data-zh="选择最适合您的授权方案。所有付费方案均包含永久授权与一年免费更新。" data-en="Choose the plan that fits you best. All paid plans include a perpetual license and 1 year of free updates.">选择最适合您的授权方案。所有付费方案均包含永久授权与一年免费更新。</p>
+
+        <!-- Pricing Cards -->
+        <div class="pricing-grid">
+            <!-- Community Plan -->
+            <div class="pricing-card">
+                <div class="plan-name" data-zh="Community" data-en="Community">Community</div>
+                <div class="plan-price">Free</div>
+                <div class="plan-desc" data-zh="开源免费，适合个人学习与非商业项目。" data-en="Open source and free, ideal for learning and non-commercial projects.">开源免费，适合个人学习与非商业项目。</div>
+                <ul class="plan-features">
+                    <li data-zh="GitHub 开源访问" data-en="GitHub Access">GitHub 开源访问</li>
+                    <li data-zh="基础 MD3 组件" data-en="Basic MD3 Components">基础 MD3 组件</li>
+                    <li data-zh="社区支持" data-en="Community Support">社区支持</li>
+                    <li class="dim" data-zh="QML 热重载" data-en="QML Hot Reload">QML 热重载</li>
+                    <li class="dim" data-zh="高级图表与表格" data-en="Pro Charts & DataGrid">高级图表与表格</li>
+                    <li class="dim" data-zh="商用授权" data-en="Commercial License">商用授权</li>
+                </ul>
+                <a href="https://github.com/sudoevolve/material-components-qml" class="pricing-btn outlined" data-zh="查看 GitHub" data-en="View on GitHub">查看 GitHub</a>
+            </div>
+
+            <!-- Pro Plan -->
+            <div class="pricing-card popular">
+                <div class="popular-badge" data-zh="最推荐" data-en="Recommended">最推荐</div>
+                <div class="plan-name" data-zh="Pro Platform" data-en="Pro Platform">Pro Platform</div>
+                <div class="plan-price">¥799 <small data-zh="/ 个人" data-en="/ Individual">/ 个人</small></div>
+                <div class="plan-desc" data-zh="包含核心 Pro 组件与热重载工具，极大提升开发效率。" data-en="Includes core Pro components and Hot Reload for maximum productivity.">包含核心 Pro 组件与热重载工具，极大提升开发效率。</div>
+                <ul class="plan-features">
+                    <li data-zh="包含 Community 所有功能" data-en="Everything in Community">包含 Community 所有功能</li>
+                    <li data-zh="QML 热重载 (Hot Reload)" data-en="QML Hot Reload">QML 热重载 (Hot Reload)</li>
+                    <li data-zh="高级图表 (Pro Charts)" data-en="Pro Charts">高级图表 (Pro Charts)</li>
+                    <li data-zh="UI 性能面板 & 分析器" data-en="UI Performance Panel & Profiler">UI 性能面板 & 分析器</li>
+                    <li data-zh="优先技术支持" data-en="Priority Support">优先技术支持</li>
+                    <li data-zh="商业授权许可" data-en="Commercial License">商业授权许可</li>
+                    <li class="dim" data-zh="行业专属组件包" data-en="Industry Add-ons">行业专属组件包</li>
+                </ul>
+                <a href="mailto:sales@example.com?subject=Buy%20Pro%20Platform" class="pricing-btn filled" data-zh="立即购买" data-en="Buy Now">立即购买</a>
+            </div>
+
+            <!-- Ultimate Plan -->
+            <div class="pricing-card">
+                <div class="plan-name" data-zh="Ultimate" data-en="Ultimate">Ultimate</div>
+                <div class="plan-price">¥4,799 <small data-zh="/ 个人" data-en="/ Individual">/ 个人</small></div>
+                <div class="plan-desc" data-zh="全能套装，包含所有行业组件包与未来更新。" data-en="The complete suite, including all industry packs and future updates.">全能套装，包含所有行业组件包与未来更新。</div>
+                <ul class="plan-features">
+                    <li data-zh="包含 Pro Platform 所有功能" data-en="Everything in Pro Platform">包含 Pro Platform 所有功能</li>
+                    <li data-zh="高性能表格 (DataGrid)" data-en="Enterprise DataGrid">高性能表格 (DataGrid)</li>
+                    <li data-zh="报表设计器" data-en="Report Designer">报表设计器</li>
+                    <li data-zh="所有行业方向包 (GIS/IoT/3D...)" data-en="All Industry Packs (GIS/IoT/3D...)">所有行业方向包 (GIS/IoT/3D...)</li>
+                    <li data-zh="源码交付" data-en="Source Code Delivery">源码交付</li>
+                    <li data-zh="1 对 1 专家咨询" data-en="1-on-1 Expert Consulting">1 对 1 专家咨询</li>
+                </ul>
+                <a href="mailto:sales@example.com?subject=Buy%20Ultimate" class="pricing-btn outlined" data-zh="联系销售" data-en="Contact Sales">联系销售</a>
+            </div>
+        </div>
+
+        <!-- Add-ons List -->
+        <div style="text-align: center; margin-bottom: 60px;">
+            <h3 data-zh="按需加购行业包" data-en="Add-on Industry Packs" style="margin-bottom: 20px;">按需加购行业包</h3>
+            <p style="opacity: 0.7; max-width: 600px; margin: 0 auto 30px;" data-zh="基于 Pro Platform，您可以单独购买特定的行业组件包。" data-en="Based on Pro Platform, you can purchase specific industry packs individually.">基于 Pro Platform，您可以单独购买特定的行业组件包。</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;">
+                <span class="tag new">Business Pack ¥1,399</span>
+                <span class="tag new">Research Pack ¥1,799</span>
+                <span class="tag new">Industrial Pack ¥1,399</span>
+                <span class="tag new">Security Pack ¥2,099</span>
+            </div>
+        </div>
+
+        <!-- Comparison Table -->
+        <div class="comparison-container">
+            <h3 style="margin-bottom: 30px; text-align: center;" data-zh="功能详细对比" data-en="Feature Comparison">功能详细对比</h3>
+            <table class="comp-table">
+                <thead>
+                    <tr>
+                        <th width="40%">
+                            <span data-zh="功能特性" data-en="Features">功能特性</span>
+                        </th>
+                        <th width="20%">
+                            Community
+                            <small class="comp-header-logo">Free</small>
+                        </th>
+                        <th width="20%">
+                            Pro Platform
+                            <small class="comp-header-logo">¥799</small>
+                        </th>
+                        <th width="20%">
+                            Ultimate
+                            <small class="comp-header-logo">¥4,799</small>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td data-zh="基础 MD3 组件库" data-en="Basic MD3 Components">基础 MD3 组件库</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="Material You 动态主题" data-en="Material You Theming">Material You 动态主题</td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="QML 热重载工具" data-en="QML Hot Reload Tool">QML 热重载工具</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="高级交互图表 (Pro Charts)" data-en="Pro Charts">高级交互图表 (Pro Charts)</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="UI 性能分析面板" data-en="UI Performance Panel">UI 性能分析面板</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="工程化模板与示例" data-en="Engineering Templates">工程化模板与示例</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="高性能数据表格 (DataGrid)" data-en="DataGrid">高性能数据表格 (DataGrid)</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="cross">Optional</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="报表设计与打印" data-en="Reporting">报表设计与打印</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="cross">Optional</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="3D 可视化 / 科研组件" data-en="3D Viz / Research">3D 可视化 / 科研组件</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="cross">Optional</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="工业仪表盘 / 拓扑图" data-en="Industrial / Topology">工业仪表盘 / 拓扑图</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="cross">Optional</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="商业授权 (无 GPL 限制)" data-en="Commercial License">商业授权 (无 GPL 限制)</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td data-zh="源码交付" data-en="Source Code Delivery">源码交付</td>
+                        <td><span class="cross">—</span></td>
+                        <td><span class="check">✓</span></td>
+                        <td><span class="check">✓</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div style="margin-top: 40px; opacity: 0.6; font-size: 13px; text-align: center;">
+            <p data-zh="* Optional 代表可单独购买对应的方向包 (Add-on Pack)。" data-en="* Optional means available via separate Add-on Pack purchase.">* Optional 代表可单独购买对应的方向包 (Add-on Pack)。</p>
+            <p data-zh="* 团队与企业授权请联系销售获取详细报价。" data-en="* Contact sales for Team and Enterprise licensing quotes.">* 团队与企业授权请联系销售获取详细报价。</p>
+        </div>
+    </section>
+
+    <footer>
+        <p data-zh="© 2026 MD3 组件库。保留所有权利。" data-en="© 2026 MD3 Component Library. All rights reserved.">&copy; 2026 MD3 Component Library. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const sections = Array.from(document.querySelectorAll('section[id]'));
+        const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+        const byId = new Map(sections.map(s => [s.id, s]));
+        const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const finePointer = window.matchMedia('(pointer: fine)').matches;
+        const root = document.documentElement;
+        const THEME_STORAGE_KEY = 'md3_theme';
+        const LANG_STORAGE_KEY = 'md3_lang';
+
+        function applyTheme(theme) {
+            if (theme === 'auto') {
+                delete root.dataset.theme;
+            } else {
+                root.dataset.theme = theme;
+            }
+        }
+
+        function applyLang(lang) {
+            const isEn = lang === 'en';
+            root.dataset.lang = isEn ? 'en' : 'zh';
+            document.documentElement.lang = isEn ? 'en' : 'zh-CN';
+
+            document.querySelectorAll('[data-zh][data-en]').forEach(el => {
+                el.textContent = isEn ? el.dataset.en : el.dataset.zh;
+            });
+            document.querySelectorAll('[data-zh-html][data-en-html]').forEach(el => {
+                el.innerHTML = isEn ? el.dataset.enHtml : el.dataset.zhHtml;
+            });
+
+            const titleEl = document.querySelector('title[data-zh][data-en]');
+            if (titleEl) document.title = isEn ? titleEl.dataset.en : titleEl.dataset.zh;
+
+            updateToggles();
+        }
+
+        function updateToggles() {
+            const lang = root.dataset.lang === 'en' ? 'en' : 'zh';
+            const theme = root.dataset.theme || 'auto';
+            const themeToggle = document.getElementById('themeToggle');
+            const langToggle = document.getElementById('langToggle');
+            const themeLabels = {
+                zh: { auto: '自动', dark: '夜间', light: '日间' },
+                en: { auto: 'Auto', dark: 'Dark', light: 'Light' },
+            };
+            if (themeToggle) {
+                themeToggle.textContent = themeLabels[lang]?.[theme] ?? theme;
+                themeToggle.setAttribute('aria-label', themeToggle.textContent);
+            }
+            if (langToggle) {
+                langToggle.textContent = lang === 'en' ? '中文' : 'EN';
+                langToggle.setAttribute('aria-label', langToggle.textContent);
+            }
+        }
+
+        (function initToggles() {
+            const storedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'auto';
+            const storedLang = localStorage.getItem(LANG_STORAGE_KEY) || (document.documentElement.lang?.toLowerCase().startsWith('en') ? 'en' : 'zh');
+            applyTheme(storedTheme);
+            applyLang(storedLang);
+
+            const themeToggle = document.getElementById('themeToggle');
+            const langToggle = document.getElementById('langToggle');
+            if (themeToggle) {
+                themeToggle.addEventListener('click', () => {
+                    const current = root.dataset.theme || 'auto';
+                    const next = current === 'auto' ? 'dark' : (current === 'dark' ? 'light' : 'auto');
+                    applyTheme(next);
+                    localStorage.setItem(THEME_STORAGE_KEY, next);
+                    updateToggles();
+                });
+            }
+            if (langToggle) {
+                langToggle.addEventListener('click', () => {
+                    const current = root.dataset.lang === 'en' ? 'en' : 'zh';
+                    const next = current === 'en' ? 'zh' : 'en';
+                    applyLang(next);
+                    localStorage.setItem(LANG_STORAGE_KEY, next);
+                });
+            }
+        })();
+
+        function setActive(id) {
+            navLinks.forEach(a => {
+                const target = a.getAttribute('href')?.slice(1);
+                a.classList.toggle('active', target === id);
+            });
+        }
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('in');
+            });
+        }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+        function updateScroll() {
+            const doc = document.documentElement;
+            const max = Math.max(1, doc.scrollHeight - doc.clientHeight);
+            const p = (doc.scrollTop / max) * 100;
+            const bar = document.getElementById('scrollbar');
+            if (bar) bar.style.width = `${p}%`;
+
+            const y = window.scrollY + 120;
+            let current = sections[0]?.id;
+            for (const s of sections) {
+                if (y >= s.offsetTop) current = s.id;
+            }
+            if (current) setActive(current);
+        }
+
+        navLinks.forEach(a => {
+            a.addEventListener('click', (e) => {
+                const id = a.getAttribute('href')?.slice(1);
+                const target = id ? byId.get(id) : null;
+                if (!target) return;
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                history.pushState(null, '', `#${id}`);
+            });
+        });
+
+        if (finePointer && !reduceMotion) {
+            const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+            const cards = Array.from(document.querySelectorAll('.card'));
+            const cardRects = new WeakMap();
+            cards.forEach(card => {
+                card.addEventListener('pointerenter', () => {
+                    cardRects.delete(card);
+                }, { passive: true });
+                card.addEventListener('pointermove', (e) => {
+                    let r = cardRects.get(card);
+                    if (!r) {
+                        r = card.getBoundingClientRect();
+                        cardRects.set(card, r);
+                    }
+                    const px = clamp01((e.clientX - r.left) / r.width);
+                    const py = clamp01((e.clientY - r.top) / r.height);
+                    const max = 6;
+                    const x = (px - 0.5) * 2;
+                    const y = (py - 0.5) * 2;
+                    const ry = x * max;
+                    const rx = -y * max;
+                    card.style.setProperty('--card-rx', `${rx.toFixed(2)}deg`);
+                    card.style.setProperty('--card-ry', `${ry.toFixed(2)}deg`);
+                    card.style.setProperty('--shine-x', `${(px * 100).toFixed(2)}%`);
+                    card.style.setProperty('--shine-y', `${(py * 100).toFixed(2)}%`);
+                }, { passive: true });
+                card.addEventListener('pointerleave', () => {
+                    card.style.setProperty('--card-rx', `0deg`);
+                    card.style.setProperty('--card-ry', `0deg`);
+                    card.style.setProperty('--shine-x', `50%`);
+                    card.style.setProperty('--shine-y', `30%`);
+                    cardRects.delete(card);
+                }, { passive: true });
+            });
+
+            const heroCta = document.querySelector('.hero-cta');
+            if (heroCta) {
+                heroCta.addEventListener('pointermove', (e) => {
+                    const r = heroCta.getBoundingClientRect();
+                    const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                    const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                    // Magnetic effect: move button towards cursor (stronger pull)
+                    heroCta.style.setProperty('--cta-x', `${(dx * 30).toFixed(2)}px`);
+                    heroCta.style.setProperty('--cta-y', `${(dy * 30).toFixed(2)}px`);
+                    
+                    const px = Math.max(0, Math.min(1, (e.clientX - r.left) / r.width));
+                    const py = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height));
+                    heroCta.style.setProperty('--btn-x', `${(px * 100).toFixed(2)}%`);
+                    heroCta.style.setProperty('--btn-y', `${(py * 100).toFixed(2)}%`);
+                });
+                heroCta.addEventListener('pointerleave', () => {
+                    heroCta.style.setProperty('--cta-x', `0px`);
+                    heroCta.style.setProperty('--cta-y', `0px`);
+                    heroCta.style.setProperty('--btn-x', `20%`);
+                    heroCta.style.setProperty('--btn-y', `12%`);
+                });
+            }
+
+            const primaryButtons = Array.from(document.querySelectorAll('.cta-button.primary'));
+            primaryButtons.forEach(btn => {
+                btn.addEventListener('pointermove', (e) => {
+                    const r = btn.getBoundingClientRect();
+                    const dx = (e.clientX - (r.left + r.width / 2)) / r.width;
+                    const dy = (e.clientY - (r.top + r.height / 2)) / r.height;
+                    // Magnetic effect for small buttons
+                    btn.style.setProperty('--cta-x', `${(dx * 15).toFixed(2)}px`);
+                    btn.style.setProperty('--cta-y', `${(dy * 15).toFixed(2)}px`);
+                    btn.style.transform = `translate3d(var(--cta-x, 0), var(--cta-y, 0), 0)`;
+
+                    const px = clamp01((e.clientX - r.left) / r.width);
+                    const py = clamp01((e.clientY - r.top) / r.height);
+                    btn.style.setProperty('--btn-x', `${(px * 100).toFixed(2)}%`);
+                    btn.style.setProperty('--btn-y', `${(py * 100).toFixed(2)}%`);
+                }, { passive: true });
+                btn.addEventListener('pointerleave', () => {
+                    btn.style.setProperty('--cta-x', `0px`);
+                    btn.style.setProperty('--cta-y', `0px`);
+                    btn.style.transform = '';
+                    btn.style.setProperty('--btn-x', `20%`);
+                    btn.style.setProperty('--btn-y', `12%`);
+                }, { passive: true });
+            });
+
+            const marqueePills = Array.from(document.querySelectorAll('.marquee-pill'));
+            marqueePills.forEach(pill => {
+                pill.addEventListener('pointermove', (e) => {
+                    const r = pill.getBoundingClientRect();
+                    const px = clamp01((e.clientX - r.left) / r.width);
+                    const py = clamp01((e.clientY - r.top) / r.height);
+                    pill.style.setProperty('--pill-x', `${(px * 100).toFixed(2)}%`);
+                    pill.style.setProperty('--pill-y', `${(py * 100).toFixed(2)}%`);
+                }, { passive: true });
+                pill.addEventListener('pointerleave', () => {
+                    pill.style.setProperty('--pill-x', `20%`);
+                    pill.style.setProperty('--pill-y', `30%`);
+                }, { passive: true });
+            });
+        }
+
+        function updateParallaxScroll() {
+            const t = Math.max(0, Math.min(1, window.scrollY / 520));
+            root.style.setProperty('--scroll', t.toFixed(4));
+        }
+
+        window.addEventListener('scroll', updateScroll, { passive: true });
+        window.addEventListener('resize', updateScroll);
+        updateScroll();
+        updateParallaxScroll();
+        window.addEventListener('scroll', updateParallaxScroll, { passive: true });
+        window.addEventListener('resize', updateParallaxScroll);
+
+        // Canvas Background Animation
+        (function initCanvasBg() {
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            
+            const canvas = document.getElementById('bg-canvas');
+            if (!canvas) return;
+
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            let mouse = { x: null, y: null };
+            let primaryRgb = '103, 80, 164'; // Default
+
+            function hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '103, 80, 164';
+            }
+
+            function updateColor() {
+                const style = getComputedStyle(document.documentElement);
+                const color = style.getPropertyValue('--md-sys-color-primary').trim();
+                primaryRgb = hexToRgb(color);
+            }
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.5;
+                    this.vy = (Math.random() - 0.5) * 0.5;
+                    this.size = Math.random() * 2 + 1;
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                    if (mouse.x != null) {
+                        const dx = mouse.x - this.x;
+                        const dy = mouse.y - this.y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 150) {
+                            const forceDirectionX = dx / distance;
+                            const forceDirectionY = dy / distance;
+                            const force = (150 - distance) / 150;
+                            const directionX = forceDirectionX * force * 0.5;
+                            const directionY = forceDirectionY * force * 0.5;
+                            this.vx -= directionX;
+                            this.vy -= directionY;
+                        }
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${primaryRgb}, 0.15)`;
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+                particles = [];
+                // Density: 1 particle per 15000px^2
+                const numParticles = Math.min(120, (width * height) / 15000);
+                for (let i = 0; i < numParticles; i++) {
+                    particles.push(new Particle());
+                }
+                updateColor();
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const distance = Math.sqrt(dx * dx + dy * dy);
+                        if (distance < 120) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(${primaryRgb}, ${0.12 * (1 - distance / 120)})`;
+                            ctx.lineWidth = 1;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.addEventListener('resize', init);
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+            window.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+            
+            const observer = new MutationObserver(updateColor);
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+            init();
+            animate();
+        })();
+    </script>
+
+    <script>
+        (function() {
+            const codeContainer = document.getElementById('typing-code');
+            if (!codeContainer) return;
+
+            const tokens = [
+                { text: "import", type: "keyword" }, { text: " QtQuick\n" },
+                { text: "import", type: "keyword" }, { text: " MD3.Controls\n\n" },
+                { text: "ApplicationWindow", type: "type" }, { text: " {\n" },
+                { text: "    visible: ", type: "property" }, { text: "true", type: "keyword" }, { text: "\n" },
+                { text: "    width: ", type: "property" }, { text: "800", type: "number" }, { text: "\n" },
+                { text: "    height: ", type: "property" }, { text: "600", type: "number" }, { text: "\n" },
+                { text: "    Material.theme: ", type: "property" }, { text: "Material.Dark", type: "type" }, { text: "\n\n" },
+                { text: "    Button", type: "type" }, { text: " {\n" },
+                { text: "        text: ", type: "property" }, { text: "\"Hello MD3\"", type: "string" }, { text: "\n" },
+                { text: "        anchors.centerIn: ", type: "property" }, { text: "parent", type: "keyword" }, { text: "\n" },
+                { text: "        onClicked: ", type: "property" }, { text: "console", type: "type" }, { text: ".log(", type: "text" }, { text: "\"Clicked!\"", type: "string" }, { text: ")\n" },
+                { text: "    }\n" },
+                { text: "}" }
+            ];
+
+            let tokenIndex = 0;
+            let charIndex = 0;
+            let currentSpan = null;
+
+            function type() {
+                if (tokenIndex >= tokens.length) return;
+
+                const token = tokens[tokenIndex];
+                
+                if (!currentSpan) {
+                    currentSpan = document.createElement('span');
+                    if (token.type) currentSpan.className = `token ${token.type}`;
+                    codeContainer.appendChild(currentSpan);
+                }
+
+                const text = token.text;
+                currentSpan.textContent += text[charIndex];
+                charIndex++;
+
+                if (charIndex >= text.length) {
+                    tokenIndex++;
+                    charIndex = 0;
+                    currentSpan = null;
+                    setTimeout(type, Math.random() * 30 + 10);
+                } else {
+                    setTimeout(type, Math.random() * 20 + 5);
+                }
+            }
+            
+            const observer = new IntersectionObserver((entries) => {
+                if (entries[0].isIntersecting) {
+                    setTimeout(type, 800);
+                    observer.disconnect();
+                }
+            });
+            observer.observe(codeContainer);
+        })();
+    </script>
+</body>
+</html>
