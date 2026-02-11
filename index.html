@@ -27,11 +27,15 @@
             --hint-text: rgba(28, 27, 31, 0.75);
             --fade-bg: rgba(255, 251, 254, 1);
             --fade-to: rgba(255, 251, 254, 0);
+            --subtitle-color: rgba(28, 27, 31, 0.62);
+            --scrollbar-bg: linear-gradient(90deg, rgba(103, 80, 164, 0.1), rgba(103, 80, 164, 0.9));
+            --pill-text-color: rgba(28, 27, 31, 0.78);
             color-scheme: light dark;
         }
 
+        /* Dark Theme - Applies if System is Dark AND NOT Forced Light */
         @media (prefers-color-scheme: dark) {
-            :root {
+            :root:not([data-theme="light"]) {
                 --md-sys-color-primary: #D0BCFF;
                 --md-sys-color-on-primary: #381E72;
                 --md-sys-color-primary-container: #4F378B;
@@ -52,7 +56,66 @@
                 --hint-text: rgba(230, 225, 229, 0.75);
                 --fade-bg: rgba(20, 18, 24, 1);
                 --fade-to: rgba(20, 18, 24, 0);
+                --subtitle-color: rgba(230, 225, 229, 0.62);
+                --scrollbar-bg: linear-gradient(90deg, rgba(208, 188, 255, 0.14), rgba(208, 188, 255, 0.95));
+                --pill-text-color: rgba(230, 225, 229, 0.78);
             }
+        }
+
+        /* Forced Dark Theme */
+        :root[data-theme="dark"] {
+            color-scheme: dark;
+            --md-sys-color-primary: #D0BCFF;
+            --md-sys-color-on-primary: #381E72;
+            --md-sys-color-primary-container: #4F378B;
+            --md-sys-color-on-primary-container: #EADDFF;
+            --md-sys-color-surface: #141218;
+            --md-sys-color-on-surface: #E6E1E5;
+            --md-sys-color-surface-variant: #49454F;
+            --md-sys-color-outline: #938F99;
+            --glass-bg: rgba(20, 18, 24, 0.72);
+            --glass-border: rgba(147, 143, 153, 0.18);
+            --hero-subtext: rgba(230, 225, 229, 0.78);
+            --card-bg: rgba(28, 27, 31, 0.92);
+            --footer-bg: rgba(28, 27, 31, 0.9);
+            --pro-bg: rgba(20, 18, 24, 0.85);
+            --pill-bg: rgba(28, 27, 31, 0.72);
+            --pill-border: rgba(147, 143, 153, 0.24);
+            --hint-bg: rgba(28, 27, 31, 0.72);
+            --hint-text: rgba(230, 225, 229, 0.75);
+            --fade-bg: rgba(20, 18, 24, 1);
+            --fade-to: rgba(20, 18, 24, 0);
+            --subtitle-color: rgba(230, 225, 229, 0.62);
+            --scrollbar-bg: linear-gradient(90deg, rgba(208, 188, 255, 0.14), rgba(208, 188, 255, 0.95));
+            --pill-text-color: rgba(230, 225, 229, 0.78);
+        }
+
+        /* Forced Light Theme */
+        :root[data-theme="light"] {
+            color-scheme: light;
+            --md-sys-color-primary: #6750A4;
+            --md-sys-color-on-primary: #FFFFFF;
+            --md-sys-color-primary-container: #EADDFF;
+            --md-sys-color-on-primary-container: #21005D;
+            --md-sys-color-surface: #FFFBFE;
+            --md-sys-color-on-surface: #1C1B1F;
+            --md-sys-color-surface-variant: #E7E0EC;
+            --md-sys-color-outline: #79747E;
+            --glass-bg: rgba(255, 251, 254, 0.75);
+            --glass-border: rgba(121, 116, 126, 0.15);
+            --hero-subtext: #49454F;
+            --card-bg: #FFFFFF;
+            --footer-bg: #F5F5F5;
+            --pro-bg: #FDFBFF;
+            --pill-bg: rgba(255, 255, 255, 0.75);
+            --pill-border: rgba(121, 116, 126, 0.18);
+            --hint-bg: rgba(255, 255, 255, 0.65);
+            --hint-text: rgba(28, 27, 31, 0.75);
+            --fade-bg: rgba(255, 251, 254, 1);
+            --fade-to: rgba(255, 251, 254, 0);
+            --subtitle-color: rgba(28, 27, 31, 0.62);
+            --scrollbar-bg: linear-gradient(90deg, rgba(103, 80, 164, 0.1), rgba(103, 80, 164, 0.9));
+            --pill-text-color: rgba(28, 27, 31, 0.78);
         }
 
         * { box-sizing: border-box; }
@@ -74,7 +137,7 @@
             left: 0;
             height: 3px;
             width: 0%;
-            background: linear-gradient(90deg, rgba(103, 80, 164, 0.1), rgba(103, 80, 164, 0.9));
+            background: var(--scrollbar-bg);
             z-index: 200;
             transform-origin: 0 0;
         }
@@ -102,22 +165,13 @@
             text-align: center;
             max-width: 700px;
             margin: -40px auto 60px;
-            color: rgba(28, 27, 31, 0.62);
+            color: var(--subtitle-color);
         }
 
         .section-subtitle.wide {
             max-width: 900px;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .section-subtitle { color: rgba(230, 225, 229, 0.62); }
-            .hero {
-                background: transparent;
-            }
-            #scrollbar {
-                background: linear-gradient(90deg, rgba(208, 188, 255, 0.14), rgba(208, 188, 255, 0.95));
-            }
-        }
 
         .logo {
             font-size: 24px;
@@ -146,6 +200,8 @@
         }
 
         .nav-links a.cta {
+            position: relative;
+            overflow: hidden;
             background-color: var(--md-sys-color-primary);
             color: var(--md-sys-color-on-primary);
             padding: 10px 24px;
@@ -174,6 +230,8 @@
         }
 
         .toggle-btn {
+            position: relative;
+            overflow: hidden;
             appearance: none;
             border: 1px solid var(--pill-border);
             background: var(--pill-bg);
@@ -306,7 +364,7 @@
             background: var(--pill-bg);
             border: 1px solid var(--pill-border);
             backdrop-filter: blur(10px);
-            color: rgba(28, 27, 31, 0.78);
+            color: var(--pill-text-color);
             font-size: 13px;
             font-weight: 800;
             white-space: nowrap;
@@ -314,11 +372,6 @@
             overflow: hidden;
         }
 
-        @media (prefers-color-scheme: dark) {
-            .marquee-pill {
-                color: rgba(230, 225, 229, 0.78);
-            }
-        }
 
         .marquee-pill::after {
             content: "";
@@ -350,9 +403,37 @@
         .hero h1 {
             font-size: 56px;
             margin-bottom: 20px;
-            /* New styles handled at the bottom of style block */
             font-weight: 800;
             letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--md-sys-color-primary) 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% auto;
+            animation: gradientFlow 5s ease infinite;
+        }
+
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ripple Effect */
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            transform: scale(0);
+            animation: ripple-anim 0.6s linear;
+            background-color: rgba(255, 255, 255, 0.3);
+            pointer-events: none;
+        }
+
+        @keyframes ripple-anim {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
         }
 
         .hero p {
@@ -1014,6 +1095,8 @@
         }
 
         .pricing-btn {
+            position: relative;
+            overflow: hidden;
             width: 100%;
             padding: 14px;
             border-radius: 12px;
@@ -1260,6 +1343,92 @@
             margin-left: 2px;
         }
         @keyframes blink { 50% { opacity: 0; } }
+
+        /* --- Modal Styles --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--md-sys-color-surface-variant);
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.6;
+        }
+
+        .modal-close:hover {
+            opacity: 1;
+        }
+
+        .modal-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--md-sys-color-primary);
+        }
+
+        .modal-content {
+            color: var(--md-sys-color-on-surface);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .contact-item a {
+            color: var(--md-sys-color-primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-item a:hover {
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
@@ -1349,7 +1518,7 @@
     </section>
 
     <section id="pro" class="section pro-section">
-        <h2 class="section-title" data-zh="Pro 版独占功能" data-en="Pro-exclusive Features">Pro 版独占功能</h2>
+        <h2 class="section-title" data-zh="Pro & Ultimate版独占功能" data-en="Pro-exclusive Features">Pro 版独占功能</h2>
         <p class="section-subtitle" data-zh="专为企业级应用、科研仿真、工业控制打造的高级组件套件，解决 99% 的复杂业务场景。" data-en="A premium suite for enterprise apps, research simulation, and industrial control—covers 99% of complex scenarios.">专为企业级应用、科研仿真、工业控制打造的高级组件套件，解决 99% 的复杂业务场景。</p>
         
         <div class="grid">
@@ -1485,12 +1654,13 @@
                     <li data-zh="包含 Community 所有功能" data-en="Everything in Community">包含 Community 所有功能</li>
                     <li data-zh="QML 热重载 (Hot Reload)" data-en="QML Hot Reload">QML 热重载 (Hot Reload)</li>
                     <li data-zh="高级图表 (Pro Charts)" data-en="Pro Charts">高级图表 (Pro Charts)</li>
+                    <li data-zh="高性能表格 (DataGrid)" data-en="High-performance DataGrid">高性能表格 (DataGrid)</li>
                     <li data-zh="UI 性能面板 & 分析器" data-en="UI Performance Panel & Profiler">UI 性能面板 & 分析器</li>
                     <li data-zh="优先技术支持" data-en="Priority Support">优先技术支持</li>
                     <li data-zh="商业授权许可" data-en="Commercial License">商业授权许可</li>
                     <li class="dim" data-zh="行业专属组件包" data-en="Industry Add-ons">行业专属组件包</li>
                 </ul>
-                <a href="mailto:sales@example.com?subject=Buy%20Pro%20Platform" class="pricing-btn filled" data-zh="立即购买" data-en="Buy Now">立即购买</a>
+                <a href="order.html?plan=pro" class="pricing-btn filled" data-zh="立即购买" data-en="Buy Now">立即购买</a>
             </div>
 
             <!-- Ultimate Plan -->
@@ -1500,13 +1670,12 @@
                 <div class="plan-desc" data-zh="全能套装，包含所有行业组件包与未来更新。" data-en="The complete suite, including all industry packs and future updates.">全能套装，包含所有行业组件包与未来更新。</div>
                 <ul class="plan-features">
                     <li data-zh="包含 Pro Platform 所有功能" data-en="Everything in Pro Platform">包含 Pro Platform 所有功能</li>
-                    <li data-zh="高性能表格 (DataGrid)" data-en="Enterprise DataGrid">高性能表格 (DataGrid)</li>
                     <li data-zh="报表设计器" data-en="Report Designer">报表设计器</li>
                     <li data-zh="所有行业方向包 (GIS/IoT/3D...)" data-en="All Industry Packs (GIS/IoT/3D...)">所有行业方向包 (GIS/IoT/3D...)</li>
                     <li data-zh="源码交付" data-en="Source Code Delivery">源码交付</li>
                     <li data-zh="1 对 1 专家咨询" data-en="1-on-1 Expert Consulting">1 对 1 专家咨询</li>
                 </ul>
-                <a href="mailto:sales@example.com?subject=Buy%20Ultimate" class="pricing-btn outlined" data-zh="联系销售" data-en="Contact Sales">联系销售</a>
+                <a href="order.html?plan=ultimate" class="pricing-btn outlined" data-zh="立即购买" data-en="Buy Now">立即购买</a>
             </div>
         </div>
 
@@ -1585,7 +1754,7 @@
                     <tr>
                         <td data-zh="高性能数据表格 (DataGrid)" data-en="DataGrid">高性能数据表格 (DataGrid)</td>
                         <td><span class="cross">—</span></td>
-                        <td><span class="cross">Optional</span></td>
+                        <td><span class="check">✓</span></td>
                         <td><span class="check">✓</span></td>
                     </tr>
                     <tr>
@@ -1678,8 +1847,9 @@
                 en: { auto: 'Auto', dark: 'Dark', light: 'Light' },
             };
             if (themeToggle) {
-                themeToggle.textContent = themeLabels[lang]?.[theme] ?? theme;
-                themeToggle.setAttribute('aria-label', themeToggle.textContent);
+                const label = (themeLabels[lang] && themeLabels[lang][theme]) || theme;
+                themeToggle.textContent = label;
+                themeToggle.setAttribute('aria-label', label);
             }
             if (langToggle) {
                 langToggle.textContent = lang === 'en' ? '中文' : 'EN';
@@ -1689,14 +1859,19 @@
 
         (function initToggles() {
             const storedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'auto';
-            const storedLang = localStorage.getItem(LANG_STORAGE_KEY) || (document.documentElement.lang?.toLowerCase().startsWith('en') ? 'en' : 'zh');
+            let defaultLang = 'zh';
+            if (document.documentElement.lang && document.documentElement.lang.toLowerCase().indexOf('en') === 0) {
+                defaultLang = 'en';
+            }
+            const storedLang = localStorage.getItem(LANG_STORAGE_KEY) || defaultLang;
+            
             applyTheme(storedTheme);
             applyLang(storedLang);
 
             const themeToggle = document.getElementById('themeToggle');
             const langToggle = document.getElementById('langToggle');
             if (themeToggle) {
-                themeToggle.addEventListener('click', () => {
+                themeToggle.addEventListener('click', function() {
                     const current = root.dataset.theme || 'auto';
                     const next = current === 'auto' ? 'dark' : (current === 'dark' ? 'light' : 'auto');
                     applyTheme(next);
@@ -1705,7 +1880,7 @@
                 });
             }
             if (langToggle) {
-                langToggle.addEventListener('click', () => {
+                langToggle.addEventListener('click', function() {
                     const current = root.dataset.lang === 'en' ? 'en' : 'zh';
                     const next = current === 'en' ? 'zh' : 'en';
                     applyLang(next);
@@ -1715,8 +1890,9 @@
         })();
 
         function setActive(id) {
-            navLinks.forEach(a => {
-                const target = a.getAttribute('href')?.slice(1);
+            navLinks.forEach(function(a) {
+                const href = a.getAttribute('href');
+                const target = href ? href.slice(1) : '';
                 a.classList.toggle('active', target === id);
             });
         }
@@ -1737,7 +1913,7 @@
             if (bar) bar.style.width = `${p}%`;
 
             const y = window.scrollY + 120;
-            let current = sections[0]?.id;
+            let current = sections[0] ? sections[0].id : null;
             for (const s of sections) {
                 if (y >= s.offsetTop) current = s.id;
             }
@@ -1746,7 +1922,8 @@
 
         navLinks.forEach(a => {
             a.addEventListener('click', (e) => {
-                const id = a.getAttribute('href')?.slice(1);
+                const href = a.getAttribute('href');
+                const id = href ? href.slice(1) : '';
                 const target = id ? byId.get(id) : null;
                 if (!target) return;
                 e.preventDefault();
@@ -2038,6 +2215,75 @@
             });
             observer.observe(codeContainer);
         })();
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Scroll Reveal Animation
+            const revealElements = document.querySelectorAll('.reveal');
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+            revealElements.forEach(el => revealObserver.observe(el));
+
+            // 2. 3D Tilt Effect for Cards
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const rotateX = ((y - centerY) / centerY) * -5; // Max -5 to 5 deg
+                    const rotateY = ((x - centerX) / centerX) * 5;  // Max -5 to 5 deg
+
+                    card.style.setProperty('--card-rx', `${rotateX}deg`);
+                    card.style.setProperty('--card-ry', `${rotateY}deg`);
+                    card.style.setProperty('--shine-x', `${x}px`);
+                    card.style.setProperty('--shine-y', `${y}px`);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.setProperty('--card-rx', '0deg');
+                    card.style.setProperty('--card-ry', '0deg');
+                });
+            });
+
+            // 3. Ripple Effect for Buttons
+            const buttons = document.querySelectorAll('.cta, .hero-cta, .pricing-btn, .toggle-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    const circle = document.createElement('span');
+                    const diameter = Math.max(btn.clientWidth, btn.clientHeight);
+                    const radius = diameter / 2;
+
+                    // For relative positioning check
+                    const rect = btn.getBoundingClientRect();
+                    
+                    circle.style.width = circle.style.height = `${diameter}px`;
+                    circle.style.left = `${e.clientX - rect.left - radius}px`;
+                    circle.style.top = `${e.clientY - rect.top - radius}px`;
+                    circle.classList.add('ripple');
+
+                    const existingRipple = btn.querySelector('.ripple');
+                    if (existingRipple) {
+                        existingRipple.remove();
+                    }
+
+                    btn.appendChild(circle);
+
+                    setTimeout(() => circle.remove(), 600);
+                });
+            });
+        });
     </script>
 </body>
 </html>
