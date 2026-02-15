@@ -1131,6 +1131,13 @@
             background: rgba(103, 80, 164, 0.05);
         }
 
+        .pricing-btn.disabled,
+        .pricing-btn[aria-disabled="true"] {
+            opacity: 0.55;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         /* --- Comparison Table --- */
         .comparison-container {
             overflow-x: auto;
@@ -1378,6 +1385,9 @@
             transform: translateY(20px);
             transition: transform 0.3s ease;
             border: 1px solid var(--md-sys-color-surface-variant);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
         }
 
         .modal-overlay.open .modal {
@@ -1411,6 +1421,19 @@
             color: var(--md-sys-color-on-surface);
             font-size: 16px;
             line-height: 1.6;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        @media (max-width: 560px) {
+            .modal {
+                padding: 18px;
+                border-radius: 18px;
+                width: calc(100% - 24px);
+            }
+            .modal-title {
+                margin-bottom: 14px;
+            }
         }
 
         .contact-item {
@@ -1428,6 +1451,164 @@
 
         .contact-item a:hover {
             text-decoration: underline;
+        }
+
+        .purchase-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin: 10px 0 18px;
+        }
+
+        @media (max-width: 560px) {
+            .purchase-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .qr-card {
+            border: 1px solid var(--md-sys-color-surface-variant);
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.55);
+            padding: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        :root[data-theme="dark"] .qr-card {
+            background: rgba(28, 27, 31, 0.55);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .qr-card {
+                background: rgba(28, 27, 31, 0.55);
+            }
+        }
+
+        .qr-title {
+            font-weight: 900;
+            letter-spacing: 0.2px;
+            margin-bottom: 10px;
+        }
+
+        .qr-img {
+            width: 100%;
+            max-width: 260px;
+            aspect-ratio: 1 / 1;
+            border-radius: 12px;
+            border: 1px solid rgba(121, 116, 126, 0.25);
+            background: rgba(121, 116, 126, 0.08);
+            display: block;
+            object-fit: contain;
+            margin: 0 auto;
+        }
+
+        .purchase-form {
+            display: grid;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .purchase-steps {
+            margin: 6px 0 12px;
+            padding-left: 18px;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .purchase-steps li {
+            margin: 6px 0;
+        }
+
+        .purchase-note {
+            border: 1px dashed var(--md-sys-color-surface-variant);
+            border-radius: 14px;
+            padding: 10px 12px;
+            background: rgba(121, 116, 126, 0.06);
+            font-size: 13px;
+            opacity: 0.85;
+            margin: 10px 0 6px;
+        }
+
+        :root[data-theme="dark"] .purchase-note {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .field {
+            display: grid;
+            gap: 6px;
+        }
+
+        .field label {
+            font-weight: 800;
+            opacity: 0.85;
+            font-size: 13px;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            border-radius: 12px;
+            border: 1px solid var(--md-sys-color-surface-variant);
+            background: rgba(255, 255, 255, 0.65);
+            color: var(--md-sys-color-on-surface);
+            padding: 10px 12px;
+            outline: none;
+            transition: box-shadow 180ms var(--md-ease), border-color 180ms var(--md-ease);
+        }
+
+        :root[data-theme="dark"] .field input,
+        :root[data-theme="dark"] .field textarea {
+            background: rgba(28, 27, 31, 0.65);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root:not([data-theme="light"]) .field input,
+            :root:not([data-theme="light"]) .field textarea {
+                background: rgba(28, 27, 31, 0.65);
+            }
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: rgba(103, 80, 164, 0.55);
+            box-shadow: 0 0 0 4px rgba(103, 80, 164, 0.14);
+        }
+
+        .purchase-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+
+        .mail-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        @media (max-width: 560px) {
+            .mail-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 10px;
+            }
+            .mail-actions .pricing-btn {
+                width: 100% !important;
+            }
+        }
+
+        .purchase-status {
+            font-size: 13px;
+            opacity: 0.78;
+            min-height: 18px;
+        }
+
+        .purchase-status.error {
+            opacity: 1;
+            color: #B3261E;
         }
     </style>
 </head>
@@ -1675,7 +1856,7 @@
                     <li data-zh="源码交付" data-en="Source Code Delivery">源码交付</li>
                     <li data-zh="1 对 1 专家咨询" data-en="1-on-1 Expert Consulting">1 对 1 专家咨询</li>
                 </ul>
-                <a href="order.html?plan=ultimate" class="pricing-btn outlined" data-zh="立即购买" data-en="Buy Now">立即购买</a>
+                <a href="#" class="pricing-btn outlined disabled" aria-disabled="true" data-zh="待开发" data-en="In development">待开发</a>
             </div>
         </div>
 
@@ -1796,6 +1977,85 @@
             <p data-zh="* 团队与企业授权请联系销售获取详细报价。" data-en="* Contact sales for Team and Enterprise licensing quotes.">* 团队与企业授权请联系销售获取详细报价。</p>
         </div>
     </section>
+
+    <div class="modal-overlay" id="purchaseModal" role="dialog" aria-modal="true" aria-hidden="true">
+        <div class="modal" role="document">
+            <button type="button" class="modal-close" id="purchaseModalClose" aria-label="Close">×</button>
+            <div class="modal-title" data-zh="购买与支付" data-en="Purchase & Payment">购买与支付</div>
+            <div class="modal-content">
+                <p style="margin: 0 0 10px; opacity: 0.75;" data-zh="Pro 版：¥799（个人）" data-en="Pro: ¥799 (Individual)">Pro 版：¥799（个人）</p>
+                <ol class="purchase-steps">
+                    <li data-zh="1) 微信/支付宝扫码支付 ¥799（Pro 个人版）。" data-en="1) Pay ¥799 (Pro Individual) via WeChat or Alipay.">1) 微信/支付宝扫码支付 ¥799（Pro 个人版）。</li>
+                    <li data-zh="2) 在支付账单里找到订单号（微信/支付宝订单号）。" data-en="2) Find your order number in the payment details.">2) 在支付账单里找到订单号（微信/支付宝订单号）。</li>
+                    <li data-zh="3) 填写 GitHub 用户名 + 订单号（用于核对与发放）。" data-en="3) Enter GitHub username + order number (for verification and delivery).">3) 填写 GitHub 用户名 + 订单号（用于核对与发放）。</li>
+                    <li data-zh="4) 点击“提交购买信息”，选择邮箱网页写信或复制内容发送。" data-en="4) Click “Submit Purchase Info”, then compose in webmail or copy and send.">4) 点击“提交购买信息”，选择邮箱网页写信或复制内容发送。</li>
+                    <li data-zh="5) 加入 QQ 群或 TG 群，进群备注订单号便于校验。" data-en="5) Join QQ or TG group. Provide order number for verification.">5) 加入 QQ 群或 TG 群，进群备注订单号便于校验。</li>
+                </ol>
+                <div class="purchase-grid" aria-label="payment-qrcodes">
+                    <div class="qr-card">
+                        <div class="qr-title" data-zh="微信付款码" data-en="WeChat Pay QR">微信付款码</div>
+                        <img class="qr-img" id="wechatQr" alt="WeChat QR" src="QR/wx.jpg" />
+                    </div>
+                    <div class="qr-card">
+                        <div class="qr-title" data-zh="支付宝付款码" data-en="Alipay QR">支付宝付款码</div>
+                        <img class="qr-img" id="alipayQr" alt="Alipay QR" src="QR/alipay.jpg" />
+                    </div>
+                </div>
+
+                <div class="contact-item">
+                    <span data-zh="售后 Q 群：" data-en="Support QQ Group: ">售后 Q 群：</span>
+                    <a href="https://qm.qq.com/" target="_blank" rel="noopener noreferrer" id="supportQqGroup">1041418951</a>
+                    <span style="opacity: 0.55;">|</span>
+                    <a href="https://t.me/+j1W1r0OMxoczNTM9" target="_blank" rel="noopener noreferrer" data-zh="TG 群" data-en="TG Group">TG 群</a>
+                </div>
+                <p style="margin: 6px 0 0; opacity: 0.72; font-size: 13px;" data-zh="进群请备注并输入微信或支付宝订单号，用于校验。" data-en="When joining, please provide your WeChat or Alipay order number for verification.">进群请备注并输入微信或支付宝订单号，用于校验。</p>
+                <div class="purchase-note" data-zh="提示：此页面不要求你提供任何密码/私密信息。仅提交 GitHub 用户名与订单号用于核对。" data-en="Note: Do not provide passwords or sensitive data here. Only GitHub username and order number are needed for verification.">提示：此页面不要求你提供任何密码/私密信息。仅提交 GitHub 用户名与订单号用于核对。</div>
+
+                <form class="purchase-form" id="purchaseForm">
+                    <input type="hidden" id="purchasePlan" name="plan" value="pro" />
+                    <div class="field">
+                        <label for="githubUsername" data-zh="GitHub 账户名（必填）" data-en="GitHub username (required)">GitHub 账户名（必填）</label>
+                        <input id="githubUsername" name="githubUsername" autocomplete="username" required />
+                    </div>
+                    <div class="field">
+                        <label for="orderNumber" data-zh="微信/支付宝订单号（必填）" data-en="WeChat/Alipay order number (required)">微信/支付宝订单号（必填）</label>
+                        <input id="orderNumber" name="orderNumber" autocomplete="off" required />
+                    </div>
+                    <div class="field">
+                        <label for="contactInfo" data-zh="联系方式（可选：QQ/微信/邮箱）" data-en="Contact (optional: QQ/WeChat/email)">联系方式（可选：QQ/微信/邮箱）</label>
+                        <input id="contactInfo" name="contactInfo" autocomplete="email" />
+                    </div>
+                    <div class="field">
+                        <label for="notes" data-zh="备注（可选）" data-en="Notes (optional)">备注（可选）</label>
+                        <textarea id="notes" name="notes" rows="3"></textarea>
+                    </div>
+                    <div class="purchase-actions">
+                        <div class="purchase-status" id="purchaseStatus" role="status" aria-live="polite"></div>
+                        <button type="submit" class="pricing-btn filled" id="savePurchaseBtn" data-zh="提交购买信息" data-en="Submit Purchase Info">提交购买信息</button>
+                    </div>
+                    <div id="mailFallback" style="display:none; margin-top: 10px;">
+                        <div style="opacity: 0.72; font-size: 13px; margin-bottom: 10px;" data-zh="如果无法自动打开邮件，请选择常用邮箱网页写信，或复制内容手动发送。" data-en="If email can't open automatically, use webmail links or copy the content and send manually.">如果无法自动打开邮件，请选择常用邮箱网页写信，或复制内容手动发送。</div>
+                        <div class="mail-actions">
+                            <a class="pricing-btn outlined" id="gmailCompose" target="_blank" rel="noopener noreferrer" href="#" style="padding:10px 14px;">Gmail</a>
+                            <a class="pricing-btn outlined" id="outlookCompose" target="_blank" rel="noopener noreferrer" href="#" style="padding:10px 14px;">Outlook</a>
+                            <a class="pricing-btn outlined" id="yahooCompose" target="_blank" rel="noopener noreferrer" href="#" style="padding:10px 14px;">Yahoo</a>
+                            <a class="pricing-btn outlined" id="qqMailOpen" target="_blank" rel="noopener noreferrer" href="https://mail.qq.com/" style="padding:10px 14px;" data-zh="QQ邮箱" data-en="QQ Mail">QQ邮箱</a>
+                            <a class="pricing-btn outlined" id="exmailOpen" target="_blank" rel="noopener noreferrer" href="https://exmail.qq.com/" style="padding:10px 14px;" data-zh="腾讯企业邮" data-en="Tencent Exmail">腾讯企业邮</a>
+                            <a class="pricing-btn outlined" id="mail163Open" target="_blank" rel="noopener noreferrer" href="https://mail.163.com/" style="padding:10px 14px;">163邮箱</a>
+                            <a class="pricing-btn outlined" id="mail126Open" target="_blank" rel="noopener noreferrer" href="https://mail.126.com/" style="padding:10px 14px;">126邮箱</a>
+                            <a class="pricing-btn outlined" id="mail139Open" target="_blank" rel="noopener noreferrer" href="https://mail.10086.cn/" style="padding:10px 14px;">139邮箱</a>
+                            <a class="pricing-btn outlined" id="aliyunMailOpen" target="_blank" rel="noopener noreferrer" href="https://mail.aliyun.com/" style="padding:10px 14px;">阿里邮箱</a>
+                            <a class="pricing-btn outlined" id="icloudMailOpen" target="_blank" rel="noopener noreferrer" href="https://www.icloud.com/mail/" style="padding:10px 14px;">iCloud</a>
+                            <a class="pricing-btn outlined" id="protonMailOpen" target="_blank" rel="noopener noreferrer" href="https://mail.proton.me/" style="padding:10px 14px;">Proton</a>
+                            <a class="pricing-btn outlined" id="systemMailto" target="_self" rel="noopener noreferrer" href="#" style="padding:10px 14px;" data-zh="系统邮箱" data-en="System mail">系统邮箱</a>
+                            <button type="button" class="pricing-btn outlined" id="copyMailContent" style="padding:10px 14px;" data-zh="复制内容" data-en="Copy content">复制内容</button>
+                        </div>
+                        <textarea id="mailBodyText" style="position:absolute; left:-9999px; top:-9999px;"></textarea>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <footer>
         <p data-zh="© 2026 MD3 组件库。保留所有权利。" data-en="© 2026 MD3 Component Library. All rights reserved.">&copy; 2026 MD3 Component Library. All rights reserved.</p>
@@ -2283,6 +2543,199 @@
                     setTimeout(() => circle.remove(), 600);
                 });
             });
+
+            const purchaseModal = document.getElementById('purchaseModal');
+            const purchaseModalClose = document.getElementById('purchaseModalClose');
+            const purchasePlan = document.getElementById('purchasePlan');
+            const purchaseForm = document.getElementById('purchaseForm');
+            const purchaseStatus = document.getElementById('purchaseStatus');
+            const githubUsername = document.getElementById('githubUsername');
+            const orderNumber = document.getElementById('orderNumber');
+            const contactInfo = document.getElementById('contactInfo');
+            const notes = document.getElementById('notes');
+            const wechatQr = document.getElementById('wechatQr');
+            const alipayQr = document.getElementById('alipayQr');
+            const PURCHASE_COLLECT_TO = 'sudoevolve@gmail.com';
+            const PURCHASE_COLLECT_CC = '2030342166@qq.com';
+            const mailFallback = document.getElementById('mailFallback');
+            const gmailCompose = document.getElementById('gmailCompose');
+            const outlookCompose = document.getElementById('outlookCompose');
+            const yahooCompose = document.getElementById('yahooCompose');
+            const systemMailto = document.getElementById('systemMailto');
+            const copyMailContent = document.getElementById('copyMailContent');
+            const mailBodyText = document.getElementById('mailBodyText');
+
+            const I18N = {
+                zh: {
+                    needGithub: '请填写 GitHub 账户名。',
+                    needOrder: '请填写微信/支付宝订单号。',
+                    copied: '已复制邮件内容，请粘贴到任意邮箱并发送。',
+                    copyFailed: '复制失败，请手动复制。',
+                    chooseMail: '请使用下方按钮选择邮箱网页写信，或复制内容发送。',
+                    submitFailed: '提交失败。',
+                },
+                en: {
+                    needGithub: 'Please enter your GitHub username.',
+                    needOrder: 'Please enter your WeChat/Alipay order number.',
+                    copied: 'Copied. Paste into any email service and send.',
+                    copyFailed: 'Copy failed. Please copy manually.',
+                    chooseMail: 'Use the buttons below to compose in webmail, or copy and send.',
+                    submitFailed: 'Submit failed.',
+                },
+            };
+
+            function t(key) {
+                const lang = root.dataset.lang === 'en' ? 'en' : 'zh';
+                return (I18N[lang] && I18N[lang][key]) || (I18N.zh && I18N.zh[key]) || '';
+            }
+
+            function setStatus(text, isError) {
+                if (!purchaseStatus) return;
+                purchaseStatus.textContent = text || '';
+                purchaseStatus.classList.toggle('error', !!isError);
+            }
+
+            if (wechatQr) wechatQr.addEventListener('error', () => { wechatQr.style.opacity = '0.35'; });
+            if (alipayQr) alipayQr.addEventListener('error', () => { alipayQr.style.opacity = '0.35'; });
+
+            function openPurchaseModal(plan) {
+                if (!purchaseModal) return;
+                purchaseModal.classList.add('open');
+                purchaseModal.setAttribute('aria-hidden', 'false');
+                setStatus('');
+                if (purchasePlan) purchasePlan.value = plan || 'pro';
+                if (githubUsername) githubUsername.focus();
+            }
+
+            function closePurchaseModal() {
+                if (!purchaseModal) return;
+                purchaseModal.classList.remove('open');
+                purchaseModal.setAttribute('aria-hidden', 'true');
+            }
+
+            async function copyText(text) {
+                if (!text) return false;
+                if (navigator.clipboard && window.isSecureContext) {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    } catch (e) {}
+                }
+                try {
+                    if (mailBodyText) {
+                        mailBodyText.value = text;
+                        mailBodyText.focus();
+                        mailBodyText.select();
+                    }
+                    return document.execCommand('copy');
+                } catch (e) {
+                    return false;
+                }
+            }
+
+            function buildMail(payload) {
+                const subject = `[MD3 ${payload.plan}] Purchase info - ${payload.githubUsername}`;
+                const lines = [
+                    `Plan: ${payload.plan}`,
+                    `GitHub: ${payload.githubUsername}`,
+                    `Order: ${payload.orderNumber}`,
+                    `Contact: ${payload.contactInfo || '-'}`,
+                    `Notes: ${payload.notes || '-'}`,
+                    `Time: ${payload.createdAt}`,
+                    `Page: ${window.location.href}`,
+                ];
+                const body = lines.join('\n');
+
+                const params = new URLSearchParams();
+                params.set('subject', subject);
+                params.set('body', body);
+                if (PURCHASE_COLLECT_CC) params.set('cc', PURCHASE_COLLECT_CC);
+                const mailto = `mailto:${PURCHASE_COLLECT_TO}?${params.toString()}`;
+
+                const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(PURCHASE_COLLECT_TO)}&su=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}${PURCHASE_COLLECT_CC ? `&cc=${encodeURIComponent(PURCHASE_COLLECT_CC)}` : ''}`;
+                const outlook = `https://outlook.live.com/mail/0/deeplink/compose?to=${encodeURIComponent(PURCHASE_COLLECT_TO)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}${PURCHASE_COLLECT_CC ? `&cc=${encodeURIComponent(PURCHASE_COLLECT_CC)}` : ''}`;
+                const yahoo = `https://compose.mail.yahoo.com/?to=${encodeURIComponent(PURCHASE_COLLECT_TO)}&subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}${PURCHASE_COLLECT_CC ? `&cc=${encodeURIComponent(PURCHASE_COLLECT_CC)}` : ''}`;
+
+                return { subject, body, mailto, gmail, outlook, yahoo };
+            }
+
+            function showMailFallback(mail) {
+                if (!mailFallback) return;
+                mailFallback.style.display = 'block';
+                if (gmailCompose) gmailCompose.href = mail.gmail;
+                if (outlookCompose) outlookCompose.href = mail.outlook;
+                if (yahooCompose) yahooCompose.href = mail.yahoo;
+                if (systemMailto) systemMailto.href = mail.mailto;
+                if (mailBodyText) mailBodyText.value = `To: ${PURCHASE_COLLECT_TO}\nCC: ${PURCHASE_COLLECT_CC}\nSubject: ${mail.subject}\n\n${mail.body}`;
+                if (copyMailContent) {
+                    copyMailContent.onclick = async () => {
+                        const ok = await copyText(mailBodyText ? mailBodyText.value : mail.body);
+                        setStatus(ok ? t('copied') : t('copyFailed'), !ok);
+                    };
+                }
+            }
+
+            const buyLinks = Array.from(document.querySelectorAll('a.pricing-btn'));
+            buyLinks.forEach(a => {
+                const href = a.getAttribute('href') || '';
+                const isBuy = href.indexOf('order.html') >= 0 || (a.textContent || '').trim().indexOf('购买') >= 0;
+                if (!isBuy) return;
+                a.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    let plan = 'pro';
+                    const m = href.match(/plan=([a-zA-Z0-9_-]+)/);
+                    if (m && m[1]) plan = m[1];
+                    openPurchaseModal(plan);
+                });
+            });
+
+            if (purchaseModal) {
+                purchaseModal.addEventListener('click', (e) => {
+                    if (e.target === purchaseModal) closePurchaseModal();
+                });
+            }
+            if (purchaseModalClose) purchaseModalClose.addEventListener('click', closePurchaseModal);
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && purchaseModal && purchaseModal.classList.contains('open')) closePurchaseModal();
+            });
+
+            if (purchaseForm) {
+                purchaseForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    setStatus('');
+                    if (mailFallback) mailFallback.style.display = 'none';
+
+                    const gh = (githubUsername && githubUsername.value || '').trim();
+                    const ord = (orderNumber && orderNumber.value || '').trim();
+                    if (!gh) {
+                        setStatus(t('needGithub'), true);
+                        if (githubUsername) githubUsername.focus();
+                        return;
+                    }
+                    if (!ord) {
+                        setStatus(t('needOrder'), true);
+                        if (orderNumber) orderNumber.focus();
+                        return;
+                    }
+
+                    const payload = {
+                        githubUsername: gh,
+                        orderNumber: ord,
+                        contactInfo: (contactInfo && contactInfo.value || '').trim(),
+                        notes: (notes && notes.value || '').trim(),
+                        plan: (purchasePlan && purchasePlan.value) || 'pro',
+                        createdAt: new Date().toISOString(),
+                    };
+
+                    try {
+                        const mail = buildMail(payload);
+                        showMailFallback(mail);
+                        setStatus(t('chooseMail'));
+                    } catch (err) {
+                        setStatus((err && err.message) ? err.message : t('submitFailed'), true);
+                    }
+                });
+            }
         });
     </script>
 </body>
