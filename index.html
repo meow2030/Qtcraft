@@ -1682,6 +1682,123 @@
             opacity: 1;
             color: #B3261E;
         }
+
+        /* --- Enterprise Banner --- */
+        .enterprise-banner {
+            background: linear-gradient(135deg, var(--md-sys-color-primary-container), var(--md-sys-color-surface));
+            border: 1px solid var(--md-sys-color-outline);
+            border-radius: 24px;
+            padding: 30px 40px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .enterprise-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .enterprise-content h3 {
+            color: var(--md-sys-color-on-primary-container);
+            margin: 0 0 8px;
+            font-size: 24px;
+        }
+
+        .enterprise-content p {
+            color: var(--md-sys-color-on-surface);
+            opacity: 0.8;
+            margin: 0;
+            max-width: 600px;
+        }
+
+        /* --- FAQ Section --- */
+        .faq-container {
+            max-width: 800px;
+            margin: 80px auto 0;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid var(--md-sys-color-surface-variant);
+            padding: 20px 0;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-summary {
+            list-style: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--md-sys-color-on-surface);
+            transition: color 0.2s;
+        }
+
+        .faq-summary:hover {
+            color: var(--md-sys-color-primary);
+        }
+
+        .faq-summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-summary::after {
+            content: '+';
+            font-size: 24px;
+            font-weight: 300;
+            transition: transform 0.2s;
+        }
+
+        details[open] .faq-summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            margin-top: 12px;
+            opacity: 0.8;
+            line-height: 1.6;
+            font-size: 15px;
+            padding-right: 40px;
+        }
+
+        /* --- Trust Signals --- */
+        .trust-signals {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--md-sys-color-surface-variant);
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .trust-icon {
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -1934,6 +2051,15 @@
             </div>
         </div>
 
+        <!-- Enterprise Banner -->
+        <div class="enterprise-banner">
+            <div class="enterprise-content">
+                <h3 data-zh="需要团队或企业授权？" data-en="Need Team or Enterprise License?">需要团队或企业授权？</h3>
+                <p data-zh="为您提供批量授权优惠、增值税专用发票、对公转账与合同签署服务。我们乐意为您的团队定制最佳方案。" data-en="Volume discounts, VAT invoices, bank transfers, and custom contracts. We are happy to tailor the best plan for your team.">为您提供批量授权优惠、增值税专用发票、对公转账与合同签署服务。我们乐意为您的团队定制最佳方案。</p>
+            </div>
+            <a href="mailto:support@qtcraft.com?subject=Enterprise%20Inquiry" class="pricing-btn filled" style="width: auto; min-width: 160px;" data-zh="联系销售" data-en="Contact Sales">联系销售</a>
+        </div>
+
         <!-- Add-ons List -->
         <div style="text-align: center; margin-bottom: 60px;">
             <h3 data-zh="按需加购行业包" data-en="Add-on Industry Packs" style="margin-bottom: 20px;">按需加购行业包</h3>
@@ -2050,6 +2176,47 @@
             <p data-zh="* Optional 代表可单独购买对应的方向包 (Add-on Pack)。" data-en="* Optional means available via separate Add-on Pack purchase.">* Optional 代表可单独购买对应的方向包 (Add-on Pack)。</p>
             <p data-zh="* 团队与企业授权请联系销售获取详细报价。" data-en="* Contact sales for Team and Enterprise licensing quotes.">* 团队与企业授权请联系销售获取详细报价。</p>
         </div>
+
+        <!-- FAQ Section -->
+        <div class="faq-container">
+            <h3 style="text-align: center; margin-bottom: 40px;" data-zh="常见问题" data-en="FAQ">常见问题</h3>
+            
+            <div class="faq-item">
+                <details>
+                    <summary class="faq-summary" data-zh="授权许可是永久的吗？" data-en="Is the license perpetual?">授权许可是永久的吗？</summary>
+                    <div class="faq-answer">
+                        <p data-zh="是的。购买后您将获得当前版本的永久使用权。同时包含 1 年的免费更新与技术支持服务。1 年后您可以选择续费更新（费用为原价的 40%），或继续使用最后拥有的版本而不受影响。" data-en="Yes. You get a perpetual license for the version you purchase, plus 1 year of free updates and support. After 1 year, you can renew updates (at 40% cost) or keep using your last version forever.">是的。购买后您将获得当前版本的永久使用权。同时包含 1 年的免费更新与技术支持服务。1 年后您可以选择续费更新（费用为原价的 40%），或继续使用最后拥有的版本而不受影响。</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary class="faq-summary" data-zh="可以开发商业闭源软件吗？" data-en="Can I develop commercial closed-source apps?">可以开发商业闭源软件吗？</summary>
+                    <div class="faq-answer">
+                        <p data-zh="完全可以。Pro 与 Ultimate 版均提供商业授权，允许您分发闭源的商业软件，无需开源您的应用程序代码。Community 版则遵循开源协议。" data-en="Absolutely. Pro and Ultimate plans come with a commercial license allowing you to distribute closed-source applications. Community plan follows open source licenses.">完全可以。Pro 与 Ultimate 版均提供商业授权，允许您分发闭源的商业软件，无需开源您的应用程序代码。Community 版则遵循开源协议。</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary class="faq-summary" data-zh="支持哪些操作系统？" data-en="Which OS are supported?">支持哪些操作系统？</summary>
+                    <div class="faq-answer">
+                        <p data-zh="支持 Windows, macOS, Linux, Android 以及嵌入式 Linux 设备。组件库基于纯 Qt/QML 编写，只要能运行 Qt 的平台均可使用。" data-en="Windows, macOS, Linux, Android, and Embedded Linux. The library is pure Qt/QML, running anywhere Qt runs.">支持 Windows, macOS, Linux, Android 以及嵌入式 Linux 设备。组件库基于纯 Qt/QML 编写，只要能运行 Qt 的平台均可使用。</p>
+                    </div>
+                </details>
+            </div>
+
+            <div class="faq-item">
+                <details>
+                    <summary class="faq-summary" data-zh="提供发票吗？" data-en="Do you provide invoices?">提供发票吗？</summary>
+                    <div class="faq-answer">
+                        <p data-zh="是的。我们支持开具中国大陆增值税普通发票（个人/企业）与专用发票（仅限企业）。购买后请联系客服或发送邮件申请开票。" data-en="Yes. We provide VAT invoices for mainland China. Please contact support after purchase to request an invoice.">是的。我们支持开具中国大陆增值税普通发票（个人/企业）与专用发票（仅限企业）。购买后请联系客服或发送邮件申请开票。</p>
+                    </div>
+                </details>
+            </div>
+        </div>
     </section>
     </main>
 
@@ -2126,16 +2293,14 @@
                             <a class="pricing-btn outlined" id="systemMailto" target="_self" rel="noopener noreferrer" href="#" style="padding:10px 14px;" data-zh="系统邮箱" data-en="System mail">系统邮箱</a>
                             <button type="button" class="pricing-btn outlined" id="copyMailContent" style="padding:10px 14px;" data-zh="复制内容" data-en="Copy content">复制内容</button>
                         </div>
-                        <textarea id="mailBodyText" style="position:absolute; left:-9999px; top:-9999px;"></textarea>
-                    </div>
-                </form>
-            </div>
+                    <textarea id="mailBodyText" style="position:absolute; left:-9999px; top:-9999px;"></textarea>
+                </div>
+            </form>
+
+
         </div>
     </div>
 
-    <footer>
-        <p data-zh="© 2026 MD3 组件库。保留所有权利。" data-en="© 2026 MD3 Component Library. All rights reserved.">&copy; 2026 MD3 Component Library. All rights reserved.</p>
-    </footer>
 
     <script>
         const sections = Array.from(document.querySelectorAll('section[id]'));
