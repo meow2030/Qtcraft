@@ -3,6 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MD3：高性能 Qt/QML Material Design 3 组件库。纯 QML 实现，零 QtQuick.Controls 依赖，面向高性能跨平台桌面应用。">
+    <meta name="robots" content="index,follow">
+    <meta name="theme-color" content="#6750A4">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+    <meta property="og:site_name" content="MD3 Library">
+    <meta property="og:title" content="MD3 - 高性能 Qt/QML Material Design 3 组件库">
+    <meta property="og:description" content="纯 QML 实现，零 QtQuick.Controls 依赖。为高性能、跨平台桌面应用而生。">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="MD3 - 高性能 Qt/QML Material Design 3 组件库">
+    <meta name="twitter:description" content="纯 QML 实现，零 QtQuick.Controls 依赖。为高性能、跨平台桌面应用而生。">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20viewBox%3D%270%200%2064%2064%27%3E%3Cdefs%3E%3ClinearGradient%20id%3D%27g%27%20x1%3D%270%27%20y1%3D%270%27%20x2%3D%271%27%20y2%3D%271%27%3E%3Cstop%20stop-color%3D%27%236750A4%27/%3E%3Cstop%20offset%3D%271%27%20stop-color%3D%27%23ec4899%27/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2764%27%20height%3D%2764%27%20rx%3D%2716%27%20fill%3D%27url(%23g)%27/%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2754%25%27%20text-anchor%3D%27middle%27%20font-family%3D%27Segoe%20UI%2C%20Arial%27%20font-size%3D%2724%27%20fill%3D%27white%27%20font-weight%3D%27700%27%3EMD3%3C/text%3E%3C/svg%3E">
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Product",
+            "name": "MD3 Qt/QML Material Design 3 组件库",
+            "description": "基于 Material Design 3 规范，纯 QML 实现，零 QtQuick.Controls 依赖。为高性能、跨平台桌面应用而生。",
+            "brand": { "@type": "Brand", "name": "MD3" },
+            "offers": [
+                {
+                    "@type": "Offer",
+                    "name": "Community",
+                    "price": "0",
+                    "priceCurrency": "CNY",
+                    "availability": "https://schema.org/InStock",
+                    "url": "#pricing"
+                },
+                {
+                    "@type": "Offer",
+                    "name": "Pro Platform（个人）",
+                    "price": "799",
+                    "priceCurrency": "CNY",
+                    "availability": "https://schema.org/InStock",
+                    "url": "#pricing"
+                },
+                {
+                    "@type": "Offer",
+                    "name": "Ultimate（个人）",
+                    "price": "4799",
+                    "priceCurrency": "CNY",
+                    "availability": "https://schema.org/PreOrder",
+                    "url": "#pricing"
+                }
+            ]
+        }
+    </script>
     <title data-zh="MD3 - 高性能 Qt/QML Material Design 3 组件库" data-en="MD3 - High-performance Qt/QML Material Design 3 Component Library">MD3 - 高性能 Qt/QML Material Design 3 组件库</title>
     <style>
         :root {
@@ -129,6 +176,31 @@
             background-color: var(--md-sys-color-surface);
             color: var(--md-sys-color-on-surface);
             line-height: 1.6;
+        }
+
+        .skip-link {
+            position: absolute;
+            left: 16px;
+            top: 10px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: var(--md-sys-color-primary);
+            color: var(--md-sys-color-on-primary);
+            text-decoration: none;
+            font-weight: 800;
+            transform: translateY(-140%);
+            transition: transform 180ms var(--md-ease);
+            z-index: 300;
+        }
+
+        .skip-link:focus {
+            transform: translateY(0);
+            outline: none;
+        }
+
+        :focus-visible {
+            outline: 3px solid rgba(103, 80, 164, 0.55);
+            outline-offset: 3px;
         }
 
         #scrollbar {
@@ -1620,11 +1692,12 @@
     </div>
     <canvas id="bg-canvas"></canvas>
     <div id="scrollbar"></div>
+    <a class="skip-link" href="#main" data-zh="跳到正文" data-en="Skip to content">跳到正文</a>
 
     <header>
         <div class="logo">MD3 Library</div>
         <div class="header-right">
-            <nav class="nav-links">
+            <nav class="nav-links" aria-label="Primary navigation">
                 <a href="#features" data-zh="优势" data-en="Benefits">优势</a>
                 <a href="#pro" data-zh="Pro 功能" data-en="Pro Features">Pro 功能</a>
                 <a href="#pricing" class="cta" data-zh="获取 Pro 版" data-en="Get Pro">获取 Pro 版</a>
@@ -1636,6 +1709,7 @@
         </div>
     </header>
 
+    <main id="main" role="main">
     <section class="hero">
         <div class="hero-container">
             <div class="hero-text">
@@ -1977,11 +2051,12 @@
             <p data-zh="* 团队与企业授权请联系销售获取详细报价。" data-en="* Contact sales for Team and Enterprise licensing quotes.">* 团队与企业授权请联系销售获取详细报价。</p>
         </div>
     </section>
+    </main>
 
-    <div class="modal-overlay" id="purchaseModal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-overlay" id="purchaseModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="purchaseModalTitle">
         <div class="modal" role="document">
             <button type="button" class="modal-close" id="purchaseModalClose" aria-label="Close">×</button>
-            <div class="modal-title" data-zh="购买与支付" data-en="Purchase & Payment">购买与支付</div>
+            <div class="modal-title" id="purchaseModalTitle" data-zh="购买与支付" data-en="Purchase & Payment">购买与支付</div>
             <div class="modal-content">
                 <p style="margin: 0 0 10px; opacity: 0.75;" data-zh="Pro 版：¥799（个人）" data-en="Pro: ¥799 (Individual)">Pro 版：¥799（个人）</p>
                 <ol class="purchase-steps">
@@ -1994,11 +2069,11 @@
                 <div class="purchase-grid" aria-label="payment-qrcodes">
                     <div class="qr-card">
                         <div class="qr-title" data-zh="微信付款码" data-en="WeChat Pay QR">微信付款码</div>
-                        <img class="qr-img" id="wechatQr" alt="WeChat QR" src="QR/wx.jpg" />
+                        <img class="qr-img" id="wechatQr" alt="WeChat Pay QR code" src="QR/wx.jpg" loading="lazy" decoding="async" />
                     </div>
                     <div class="qr-card">
                         <div class="qr-title" data-zh="支付宝付款码" data-en="Alipay QR">支付宝付款码</div>
-                        <img class="qr-img" id="alipayQr" alt="Alipay QR" src="QR/alipay.jpg" />
+                        <img class="qr-img" id="alipayQr" alt="Alipay QR code" src="QR/alipay.jpg" loading="lazy" decoding="async" />
                     </div>
                 </div>
 
@@ -2155,6 +2230,8 @@
                 const href = a.getAttribute('href');
                 const target = href ? href.slice(1) : '';
                 a.classList.toggle('active', target === id);
+                if (target === id) a.setAttribute('aria-current', 'page');
+                else a.removeAttribute('aria-current');
             });
         }
 
@@ -2188,7 +2265,7 @@
                 const target = id ? byId.get(id) : null;
                 if (!target) return;
                 e.preventDefault();
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                target.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'start' });
                 history.pushState(null, '', `#${id}`);
             });
         });
@@ -2479,46 +2556,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Scroll Reveal Animation
-            const revealElements = document.querySelectorAll('.reveal');
-            const revealObserver = new IntersectionObserver((entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in');
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-
-            revealElements.forEach(el => revealObserver.observe(el));
-
-            // 2. 3D Tilt Effect for Cards
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    
-                    const rotateX = ((y - centerY) / centerY) * -5; // Max -5 to 5 deg
-                    const rotateY = ((x - centerX) / centerX) * 5;  // Max -5 to 5 deg
-
-                    card.style.setProperty('--card-rx', `${rotateX}deg`);
-                    card.style.setProperty('--card-ry', `${rotateY}deg`);
-                    card.style.setProperty('--shine-x', `${x}px`);
-                    card.style.setProperty('--shine-y', `${y}px`);
-                });
-
-                card.addEventListener('mouseleave', () => {
-                    card.style.setProperty('--card-rx', '0deg');
-                    card.style.setProperty('--card-ry', '0deg');
-                });
-            });
-
-            // 3. Ripple Effect for Buttons
+            // Ripple Effect for Buttons
             const buttons = document.querySelectorAll('.cta, .hero-cta, .pricing-btn, .toggle-btn');
             buttons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
